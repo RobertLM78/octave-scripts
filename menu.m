@@ -5,10 +5,7 @@ function Slctn = menu(MenuItems)
 # License: GPL v3
 # Usage:  menu(["Title";"Option1";"Option2";....;"OptionN";"Quit"])
 #         inputs a menu item list and outputs a selection from menu
-# About:  A generic menu function for menu-driven scripts.  A primary goal of
-#         this function will be to replace the default menu.m function that
-#         comes bundled with GNU Octave.
-#         (This function has 27 lines of working code)
+# About:  A generic menu function for console menu-driven scripts. 
 # -----------------------------------------------------------------------------
 if (nargin ~= 1)
 	print_usage ();
