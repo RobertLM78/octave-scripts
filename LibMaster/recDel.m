@@ -29,10 +29,17 @@ if DELrec == 0
 	return
 endif
 ###################################
-while DELrec < 1 || DELrec > rows(CAT) || isnan(DELrec) || any(toascii(DELrecTmp) == 46)
+while DELrec < 0 || DELrec > rows(CAT) || isnan(DELrec) || any(toascii(DELrecTmp) == 46)
 	fprintf("No such record number.\n")
 	DELrec = input("Record to Delete?: ","s");
 	DELrecTmp = DELrec; DELrec = str2double(DELrec);
+	####  Go back to Main Script   ####
+	if DELrec == 0
+		CAT = CAT;
+		RecNum = rows(CAT);
+		return
+	endif
+	###################################
 endwhile
 clear DELrecTmp
 
