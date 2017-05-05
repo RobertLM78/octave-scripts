@@ -1,5 +1,5 @@
 # Title: titleBrowse.m - A function for LibMaster
-# Version: 0.2; May 2017
+# Version: 0.3; May 2017
 # Author: Robert Lock - beannachtai@homtail.com
 # License: GPL v3
 # Usage:  titleBrowse(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
@@ -18,8 +18,8 @@ for k = 1:length(deblank(Topic)); # Create an underline for the title
 	undrln(1,k) = "-";
 end
 fprintf("%s\n%s\n\n",Topic,undrln)
-# Initialize Row Number
-RowNum = 0;
+# Initialize Row Number and page number
+RowNum = 0; PageN = 0;
 
 # Begin printing screen pages (length 20 rows)
 for k = 1:RecNum
@@ -28,9 +28,11 @@ for k = 1:RecNum
 	fprintf("[%d]  %s\n",RowNum,TIT{k,1})
 ##### All screen pages but the last one #####
 	if RowNum == 20                                       # Max Number of rows printed to screen
+		PageN = PageN + 1;
 		RowNum = 0;
-		# Enter a number on the list
+		fprintf("\nPage: %d\n",PageN)
 		fprintf("\n\n")
+		# Enter a number on the list
 		queryDisp = input("Select Title (Enter NULL to continue): ","s");
 		queryDispTmp = queryDisp; queryDisp = str2double(queryDisp);
 		####  Go back to Main Script   ####
@@ -74,8 +76,10 @@ for k = 1:RecNum
 
 ##### Last screen page #####
 	elseif k == RecNum
-		# Enter a number on the list
+		PageN = PageN + 1;
+		fprintf("\nPage: %d\n",PageN)
 		fprintf("\n\n")
+		# Enter a number on the list
 		queryDisp = input("Select Title (Enter NULL to continue): ","s");
 		queryDispTmp = queryDisp; queryDisp = str2double(queryDisp);
 		####  Go back to Main Script   ####
