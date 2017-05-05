@@ -1,0 +1,151 @@
+===============================================================================
+|  Projectile 3.3 - A simple projectile simulator (ignoring air restance)     |
+|      readme file                                                            |
+===============================================================================
+This package contains 15 Octave files:
+
+1 Main Script:
+Projectile.m
+
+14 Function Modules (listed in order as they are called in Projectile.m):
+angInput.m
+tgrnd.m
+timemat.m
+parameteq.m
+timemaxh.m
+maxh.m
+distmaxh.m
+distot.m
+xgInput.m
+calcAng.m
+PrintFile.m
+PrintScreen.m
+plotProj.m
+hlpFn.m
+###### Headers ################################################################
+# -----------------------------------------------------------------------------
+# Title: Projectile.m - A simple projectile simulator (ignoring air restance)
+# Version: 3.3; April 2017 - Modularized;
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# About: Ver. 3.3 improves flow control, now the script shouldn't crash given
+#        erroneous data entry inputing initial velocity, and won't crash due to
+#        variables not being defined in the workspace yet.
+# -----------------------------------------------------------------------------
+# Title: angInput.m - function for Projectile.m
+# Version: 0.2 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: [angle_matrix,initial_velocity] = angInput(), [angle_matrix, initial_velocity] = angInput
+# About: Input the angle matrix of six angles and enter the initial velocity
+# -----------------------------------------------------------------------------
+# Title: tgrnd.m - function for Projectile.m
+# Version: 0.1 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: time_ground = tgrnd(acceleration_gravity,initial_velocity,angle_matrix)
+# About: Calculate the time for projectile at v0 to hit the ground
+# -----------------------------------------------------------------------------
+# Title: timemat.m - function for Projectile.m
+# Version: 0.1 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: time_matrix = timemat(time_ground)
+# About: Create independent variable (time) for parametric equations
+# -----------------------------------------------------------------------------
+# Title: parameteq.m - function for Projectile.m
+# Version: 0.1 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: [x,y] = parameteq(acceleration_gravity,time_matrix,initial_velocity,angle_matrix)
+# About: Calculate the parametric equations
+# -----------------------------------------------------------------------------
+# Title: timemaxh.m - function for Projectile.m
+# Version: 0.1 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: time_max_h = timemaxh(acceleration_gravity,initial_velocity,angle_matrix)
+# About: Calculate time of max height
+# -----------------------------------------------------------------------------
+# Title: maxh.m - function for Projectile.m
+# Version: 0.1 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: max_height = maxh(acceleration_gravity,initial_velocity,angle_matrix,time_max_h)
+# About: Calculate the max height
+# -----------------------------------------------------------------------------
+# Title: distmaxh.m - function for Projectile.m
+# Version: 0.1 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: x_distance_at_max_h = distmaxh(initial_velocity,angle_matrix,time_max_h)
+# About: Calculate the x distance at max height
+# -----------------------------------------------------------------------------
+# Title: distot.m - function for Projectile.m
+# Version: 0.1 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: x_ground = distot(initial_velocity,angle_matrix,time_ground)
+# About: Calculate the total x distance
+# -----------------------------------------------------------------------------
+# Title: xgInput.m - function for Projectile.m
+# Version: 0.1 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: [x_ground,initial_velocity] = xgInput(), [x_ground,initial_velocity] = xgInput
+# About: Input the distance matrix of six distances and enter the initial velocity
+# -----------------------------------------------------------------------------
+# Title: calcAng.m - function for Projectile.m
+# Version: 0.1 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: time_matrix = calcAng(initial_velocity,acceleration_gravity,x_ground)
+# About: Calculate the angles for the total distance (xg)
+# -----------------------------------------------------------------------------
+# Title: PrintFile.m - function for Projectile.m
+# Version: 0.1 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: PrintFile(initial_velocity,angle_matrix,max_height,time_max_h,time_ground,x_ground,x_distance_at_max_h)
+# About: Print the data to file
+# -----------------------------------------------------------------------------
+# Title: PrintScreen.m - function for Projectile.m
+# Version: 0.1 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: PrintScreen(initial_velocity,angle_matrix,max_height,time_max_h,time_ground,x_ground,x_distance_at_max_h)
+# About: Print the data to screen
+# -----------------------------------------------------------------------------
+# Title: plotProj.m - function for Projectile.m
+# Version: 0.3 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: plotProj(x_distance,y_height,max(x_ground),max(max_height),angle_matrix,initial_velocity)
+# About:  Plot the parametric equations
+# -----------------------------------------------------------------------------
+# Title: hlpFn.m - function for Projectile.m
+# Version: 0.2 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: hlpFn(), hlpFn
+# About: Help function - 'cat' the readme file to screen
+# -----------------------------------------------------------------------------
+###############################################################################
+
+===============================================================================
+| User guide                                                                  |
+===============================================================================
+Run the script and follow the on screen instructions.   While entering the
+angles do not enter angles less than 10⁰ or greater than 80⁰ (why would you
+want to, anyway?)  Remember that 45⁰ is optimal for any initial velocity.
+
+Any positive number for initial velocity is fine, though ranges in the 100 -
+350 m/s are best.  (Referring to a real canon
+[https://en.wikipedia.org/wiki/14%22/45_caliber_gun] notice that these canon
+muzzle velocities are in the 600 - 800 m/s range).
+
+For now, six (6) angles or distances can be entered.  Though a long term goal
+may be to generalize this, however for now, a fixed amount will remain.
+
+
+===============================================================================
