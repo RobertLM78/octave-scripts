@@ -18,7 +18,7 @@ KbIN = (kbhit()); KbIN = lower(KbIN);
 
 if KbIN == "c"
 	#######################
-    # OPTION C Conditions #
+        # OPTION C Conditions #
 	#######################
 	fprintf("\n\n")
 	fprintf("Library Master 1.1 - A port of the RBL classic program to OCTAVE\n")
