@@ -28,8 +28,9 @@ for k = 1:RecNum
 	fprintf("[%d]  %s\n",RowNum,TIT{k,1})
 ##### All screen pages but the last one #####
 	if RowNum == 20                                       # Max Number of rows printed to screen
-		PageN = PageN + 1;
-		RowNum = 0;
+		PageN = PageN + 1;    # increment PageN
+		RowNum = 0;           # reset RowNum
+		RecMat = [];          # empty RecMat
 		fprintf("\nPage: %d\n",PageN)
 		fprintf("\n\n")
 		# Enter a number on the list
@@ -40,7 +41,7 @@ for k = 1:RecNum
 			return
 		endif
 		###################################
-		while queryDisp < 1 || queryDisp > 20 || queryDisp > rows(TIT)     # Max Number of rows
+		while queryDisp < 1 || queryDisp > 20                              # Max Number of rows
 			fprintf("Choose an item number within range.\n")
 			queryDisp = input("Select Title (Enter NULL to continue): ","s");
 			queryDispTmp = queryDisp; queryDisp = str2double(queryDisp);
@@ -76,7 +77,7 @@ for k = 1:RecNum
 
 ##### Last screen page #####
 	elseif k == RecNum
-		PageN = PageN + 1;
+		PageN = PageN + 1;    # increment PageN
 		fprintf("\nPage: %d\n",PageN)
 		fprintf("\n\n")
 		# Enter a number on the list
@@ -87,7 +88,7 @@ for k = 1:RecNum
 			return
 		endif
 		###################################
-		while queryDisp < 1 || queryDisp > 20 || queryDisp > rows(TIT)     # Max Number of rows
+		while queryDisp < 1 || queryDisp > length(RecMat)                  # Max Number of rows
 			fprintf("Choose an item number within range.\n")
 			queryDisp = input("Select Title (Enter NULL to continue): ","s");
 			queryDispTmp = queryDisp; queryDisp = str2double(queryDisp);
