@@ -1,0 +1,91 @@
+===============================================================================
+|  fgConvert 1.1 - A FightGear conversion utility                             |
+|      readme file                                                            |
+===============================================================================
+This package contains 8 Octave files:
+
+1 Main Script:
+fgConvert.m
+
+7 Function Modules:
+dec2dms.m
+descentCalc.m
+dms2dec.m
+ft2m.m
+km2mi.m
+m2ft.m
+mi2km.m
+###### Headers ################################################################
+# Title: fgConvert.m - FlightGear pilot conversions
+# Version: 1.0 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# About: Convert altitudes and distances between SI and BS - Also calculate the
+#        descent distance for a given angle of descent.  Most code is based on
+#        dConvert_m.m, so it will begin with a beta version number (1.0).
+# -----------------------------------------------------------------------------
+# Title: dec2dms.m - function for fgConvert.m
+# Version: 0.2 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: dec2dms() or dec2dms
+# -----------------------------------------------------------------------------
+# Title: descentCalc.m - function for fgConvert.m
+# Version: 0.2 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: descentCalc() or descentCalc
+# -----------------------------------------------------------------------------
+# Title: dms2dec.m - function for fgConvert.m
+# Version: 0.2 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: dms2dec() or dms2dec
+# -----------------------------------------------------------------------------
+# Title: ft2m.m - function for fgConvert.m
+# Version: 0.2 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: ft2m() or ft2m
+# -----------------------------------------------------------------------------
+# Title: km2mi.m - function for fgConvert.m
+# Version: 0.3 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: km2mi() or km2mi
+# -----------------------------------------------------------------------------
+# Title: m2ft.m - function for fgConvert.m
+# Version: 0.2 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: m2ft() or m2ft
+# -----------------------------------------------------------------------------
+# Title: mi2km.m - function for fgConvert.m
+# Version: 0.3 - April 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: mi2km() or mi2km
+# -----------------------------------------------------------------------------
+
+###############################################################################
+
+===============================================================================
+| User guide                                                                  |
+===============================================================================
+Since so much aviation data are split between SI and BS systems, it is nice to
+have something to facilitate such conversions.   This is where fgConvert comes
+in handy.
+
+Designed with FGFS in mind, and all the tools used with it, such as Marble,
+which gives elevations in meters and distances in kilometers.  Converts degrees
+in decimal to degrees in DMS form and from DMS to decimal.
+
+Also helps calculate the descent distance for angles of descent between 5⁹ and
+10⁰.
+
+
+-------------------------------------------------------------------------------
+This would be a good project for making an .oct binary, but for now, we have
+converted this into a self-contained oxs. (see ~/octave-oxs/ )
+===============================================================================
+
