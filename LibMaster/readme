@@ -1,5 +1,5 @@
 ===============================================================================
-| Library Master 1.1; A port of the RBL classic program to OCTAVE             |
+| Library Master 1.2; A port of the RBL classic program to OCTAVE             |
 |      readme file                                                            |
 ===============================================================================
 This package contains 14 Octave files:
@@ -24,7 +24,7 @@ titleSearch.m
 
 ###### Headers ################################################################
 # Title: LibMaster.m - A port of the RBL classic program to OCTAVE
-# Version: 1.1 - May 2017
+# Version: 1.2 - May 2017
 # Author: Robert Lock - beannachtai@homtail.com
 # License: GPL v3
 # About:
