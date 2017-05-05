@@ -2,19 +2,20 @@
 | Library Master 1.1; A port of the RBL classic program to OCTAVE - why not?! |
 |      readme file                                                            |
 ===============================================================================
-This package contains 13 Octave files:
+This package contains 14 Octave files:
 
 1 Main Script:
 LibMaster.m
 
-12 Function Modules:
+13 Function Modules:
 authorSearch.m
 fileLoad.m
 fileSave.m
 fileSort.m
 fileUpdate.m
-hlpFn.m  (generic function)
+hlpFn.m    (generic function)
 recDel.m
+splash.m   (generic function)
 strCat.m
 strDiv.m
 subjSearch.m
@@ -50,7 +51,7 @@ titleSearch.m
 # About:
 # -----------------------------------------------------------------------------
 # Title: fileSort.m - A function for LibMaster
-# Version: 0.2; May 2017 ; Now ignores preceeding articles in titles
+# Version: 0.3; May 2017 ; Now ignores preceeding articles in titles
 # Author: Robert Lock - beannachtai@homtail.com
 # License: GPL v3
 # Usage:  CATalog = fileSort(CATalog,RecordNumbers)
@@ -62,13 +63,6 @@ titleSearch.m
 # License: GPL v3
 # Usage:  [CATalog,RecordNumbers] = fileUpdate(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
 # About:
-# -----------------------------------------------------------------------------
-# Title: hlpFn.m
-# Version: 0.3 - May 2017
-# Author: Robert Lock - beannachtai@homtail.com
-# License: GPL v3
-# Usage: hlpFn(), hlpFn
-# About: Help function - 'cat' the readme file to screen
 # -----------------------------------------------------------------------------
 # Title: recDel.m - A function for LibMaster
 # Version: 0.2; May 2017
