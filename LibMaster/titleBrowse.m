@@ -30,7 +30,6 @@ for k = 1:RecNum
 	if RowNum == 20                                       # Max Number of rows printed to screen
 		PageN = PageN + 1;    # increment PageN
 		RowNum = 0;           # reset RowNum
-		RecMat = [];          # empty RecMat
 		fprintf("\nPage: %d\n",PageN)
 		fprintf("\n\n")
 		# Enter a number on the list
@@ -72,6 +71,7 @@ for k = 1:RecNum
 			clc;
 			fprintf("%s\n%s\n\n",Topic,undrln)
 			continue
+			RecMat = [];          # empty RecMat
 		endif
 #############################################
 
