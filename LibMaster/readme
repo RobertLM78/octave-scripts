@@ -1,0 +1,189 @@
+===============================================================================
+| Library Master 1.1; A port of the RBL classic program to OCTAVE - why not?! |
+|      readme file                                                            |
+===============================================================================
+This package contains 13 Octave files:
+
+1 Main Script:
+LibMaster.m
+
+12 Function Modules:
+authorSearch.m
+fileLoad.m
+fileSave.m
+fileSort.m
+fileUpdate.m
+hlpFn.m  (generic function)
+recDel.m
+strCat.m
+strDiv.m
+subjSearch.m
+titleBrowse.m
+titleSearch.m
+
+###### Headers ################################################################
+# Title: LibMaster.m - A port of the RBL classic program to OCTAVE
+# Version: 1.1 - May 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# About:
+# -----------------------------------------------------------------------------
+# Title: authorSearch.m - A function for LibMaster
+# Version: 0.1; May 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage:  authorSearch(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
+# About:
+# -----------------------------------------------------------------------------
+# Title: fileLoad.m - A function for LibMaster
+# Version: 0.2; May 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage:  [CATalog,RecordNumbers] = fileLoad();  [CATalog,RecordNumbers] = fileLoad
+# About:
+# -----------------------------------------------------------------------------
+# Title: fileSave.m - A function for LibMaster
+# Version: 0.1; May 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: fileSave(CATalog,RecordNumbers)
+# About:
+# -----------------------------------------------------------------------------
+# Title: fileSort.m - A function for LibMaster
+# Version: 0.2; May 2017 ; Now ignores preceeding articles in titles
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage:  CATalog = fileSort(CATalog,RecordNumbers)
+# About: no changes written to file
+# -----------------------------------------------------------------------------
+# Title: fileUpdate.m - A function for LibMaster
+# Version: 0.3; May 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage:  [CATalog,RecordNumbers] = fileUpdate(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
+# About:
+# -----------------------------------------------------------------------------
+# Title: hlpFn.m
+# Version: 0.3 - May 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage: hlpFn(), hlpFn
+# About: Help function - 'cat' the readme file to screen
+# -----------------------------------------------------------------------------
+# Title: recDel.m - A function for LibMaster
+# Version: 0.2; May 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage:  [CATalog,RecNum] = recDel(CAT)
+# About: no changes written to file
+# -----------------------------------------------------------------------------
+# Title: strCat.m - A function for LibMaster
+# Version: 0.1; May 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage:  CAT = strCat(TIT,AUT,SUBJ,NTS)
+# About: String conCatenate - concatenate TIT,AUT,etc strings into CAT
+# Notes: This function is not passed RecNum for input arg.
+# -----------------------------------------------------------------------------
+# Title: strDiv.m - A function for LibMaster
+# Version: 0.1; May 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage:  [CAT,TIT,AUT,SUBJ,NTS] = strDiv(CAT)
+# About: String Divide - strtok CAT strings into appropriate cell arrays
+# Notes: This function is not passed RecNum for input arg.
+# -----------------------------------------------------------------------------
+# Title: subjSearch.m - A function for LibMaster
+# Version: 0.1; May 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage:  subjSearch(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
+# About:
+# -----------------------------------------------------------------------------
+# Title: titleBrowse.m - A function for LibMaster
+# Version: 0.2; May 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage:  titleBrowse(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
+# About:
+# -----------------------------------------------------------------------------
+# Title: titleSearch.m - A function for LibMaster
+# Version: 0.1; May 2017
+# Author: Robert Lock - beannachtai@homtail.com
+# License: GPL v3
+# Usage:  titleSearch(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
+# About:
+# -----------------------------------------------------------------------------
+###############################################################################
+
+===============================================================================
+| User guide                                                                  |
+===============================================================================
+#########################
+#  General Information  #
+#########################
+A fork of the classic TI-Extended-BASIC/Myarc-BASIC (TIXB/MXB) program,
+LIBRARY-x. This one however introduces some new functions, such as custom file-
+names and a record deleting ability (rather than having to overwrite a record).
+Also noteworthy is the fact that the search abilities are much more powerful
+given the (C-like?) string comparing abilities of OCTAVE.
+
+######################
+#  Navigation Notes  #
+######################
+This is a menu driven script that works on kbhit() - which basically means that
+there is no waiting for an ENTER before it does what it is asked.  If a menu
+option is selected by accident, to return to the main menu TYPE '<back>' (no
+quotes) IF THE INPUT IS supposed to be A STRING, OTHERWISE for NUMERIC INPUT,
+TYPE '0' (no quotes).
+NOTE: Since there are no input arguments to 'Load File' function (fileLoad.m)
+      and therefore no means to create the output arguments, other than to
+      reset them, there is no <back> ability.  (Since basically you'd be stuck
+      having to use 'Load File' anyway).  No worry, the only thing to lose
+      during an accidental visit to 'Load File' is a sort - which is infinitely
+      faster here than TIXB/MXB (in fact it is slowed down using 'sleep Xs').
+
+##########################
+#  Updating the Catalog  #
+##########################
+This program no longer relies on a built-in filename, though one still exists.
+Enter '<def>' (no quotes) for the default filename (catalog.dat).  Otherwise
+enter the name desired, if no path is given, then the path will be the one the
+main script was launched from.
+Updating is fairly straightforward,  just enter the number of records to add,
+then enter the data.  Up to three authors per title may be entered.  The FILE
+IS *APPENDED* when finished.
+
+##########################################
+#  Sorting Catalog and Deleting Records  #
+##########################################
+Sorting the catalog will sort by title (TIT), which is the first field of each
+record in CAT.  Starting with version 1.1, all preceeding articles are ignored
+while sorting, giving a truly alphabetized catalog.dat.  The FILE IS NOT SAVED
+when finished.
+To delete a record, enter the record number.  That can be found by searching
+the title (the last number printed before an item is displayed is the record
+number).  The FILE IS NOT SAVED when finished.
+
+####################
+#  About Subjects  #
+####################
+This section of the program will take some adjustments to suite personal needs.
+Since this is much more flexible than any previous versions in TIXB/MXB, the
+sky is the limit.  By default, a three character system is deployed, for
+example:  MUSic, ART, PoeTrY, REFerence.  However anything could be used, as
+long as a convention is followed.
+
+#######################
+#  General searching  #
+#######################
+As previously stated, this OCTAVE version of Library Master is much more power-
+ful when it comes to searching.  While previously an exact phrase match had to
+exist, now one can enter 'calculus' and get all the books with the word
+'calculus' in the title.  This does mean however that one has to be careful not
+to enter some single word like 'the' without expecting a lot of results!  ;DD
+
+
+-------------------------------------------------------------------------------
+This would be a good project for making an .oct binary.
+===============================================================================
