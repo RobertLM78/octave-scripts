@@ -85,7 +85,6 @@ Also helps calculate the descent distance for angles of descent between 5⁹ and
 
 
 -------------------------------------------------------------------------------
-This would be a good project for making an .oct binary, but for now, we have
-converted this into a self-contained oxs. (see ~/octave-oxs/ )
+This would be a good project for making an .oct binary.
 ===============================================================================
 
