@@ -18,13 +18,14 @@ for k = 1:length(deblank(Topic)); # Create an underline for the title
 	undrln(1,k) = "-";
 end
 fprintf("%s\n%s\n\n",Topic,undrln)
+
 # Initialize Row Number and page number
 RowNum = 0; PageN = 0;
 
 # Begin printing screen pages (length 20 rows)
 for k = 1:RecNum
 	RowNum = RowNum + 1;
-	RecMat(1,RowNum) = k;  # Record matrix - stores RecNum in the nth element corresponding to the nth row
+	RecMat(1,RowNum) = k;  # Record matrix - stores RecNum in nth element corresponding to nth selected item
 	fprintf("[%d]  %s\n",RowNum,TIT{k,1})
 ##### All screen pages but the last one #####
 	if RowNum == 20                                       # Max Number of rows printed to screen
@@ -62,7 +63,7 @@ for k = 1:RecNum
 			fprintf("Subject:    %s\n",SUBJ{RecMat(1,queryDisp),1})
 			fprintf("Notes:      %s\n",NTS{RecMat(1,queryDisp),1})
 			fprintf("Press any key to continue.\n")
-			kbhit();
+			kbhit(); clear RecMat = []; # empty RecMat
 			# Display title and name of function
 			clc;
 			fprintf("%s\n%s\n\n",Topic,undrln)
@@ -70,9 +71,10 @@ for k = 1:RecNum
 			# Display title and name of function
 			clc;
 			fprintf("%s\n%s\n\n",Topic,undrln)
+			clear RecMat = [];      # empty RecMat
 			continue
-			RecMat = [];          # empty RecMat
 		endif
+		clear RecMat = [];          # empty RecMat
 #############################################
 
 ##### Last screen page #####
@@ -99,7 +101,7 @@ for k = 1:RecNum
 			###################################
 		endwhile
 		clear queryDispTmp
-		if queryDisp >= 1 || queryDisp <= 20                               # Max Number of rows
+		if queryDisp >= 1 || queryDisp <= length(RecMat)                   # Max Number of rows
 			# Display title and name of function
 			clc;
 			fprintf("%s\n%s\n\n",Topic,undrln)
