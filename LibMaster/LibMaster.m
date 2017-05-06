@@ -4,6 +4,7 @@
 # License: GPL v3
 # About:
 # -----------------------------------------------------------------------------
+clear
 ### Splash ###
 splash();
 ##############
@@ -11,7 +12,7 @@ splash();
 ####  Initializations  ####
 clear,clc, close all
 CONT = 1; KbIN = "0"; # CONTinue with the program; KeyboardINput
-menuPart1 = ["LibMaster-1.1";"Author Search";"Title Search";"Title Browser";"Subject Search"];
+menuPart1 = ["LibMaster-1.2";"Author Search";"Title Search";"Title Browser";"Subject Search"];
 menuPart2 = ["Sort by Title";"Data Entry Mode";"Delete a Record";"Load File";"Save File"];
 menuPart3 = ["Save & Quit";"Quit";"Help: display readme"];
 global MenuItems = [menuPart1;menuPart2;menuPart3];
@@ -135,9 +136,9 @@ while CONT ~= 0
 		CONT = 0; # Send the signal to quit (CONT ~= 0) == 0
 		clc;
 	elseif KbIN == "l"
-		######################
-		# OPTION L CODE HERE #
-		######################
+		##########################
+		# OPTION L Help / readme #
+		##########################
 		 hlpFn();
 		CONT = 1;
 	endif
