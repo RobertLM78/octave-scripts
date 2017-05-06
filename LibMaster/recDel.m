@@ -43,14 +43,37 @@ while DELrec < 0 || DELrec > rows(CAT) || isnan(DELrec) || any(toascii(DELrecTmp
 endwhile
 clear DELrecTmp
 
-# Delete that sucker
-CAT{DELrec,1} = [];
-CAT(DELrec,:) = [];
+# Confirm delete
+fprintf("Record %d selected:\n  %s\n",DELrec,CAT{DELrec,1})
+ConfirmD = input("Are you sure?(Y/N)?: ","s");
+if isempty(ConfirmD) == 1
+	ConfirmD = " ";
+endif
+ConfirmD = ConfirmD(1,1);
+while ConfirmD ~= "y" && ConfirmD ~= "Y" && ConfirmD ~= "n" && ConfirmD ~= "N"
+	ConfirmD = input("Are you sure?(Y/N)?: ","s");
+	if isempty(ConfirmD) == 1
+		ConfirmD = " ";
+	endif
+	ConfirmD = ConfirmD(1,1);
+endwhile
+switch ConfirmD
+case {"Y","y"}
+	# Delete that sucker
+	CAT{DELrec,1} = [];
+	CAT(DELrec,:) = [];
+	# Reset number of records
+	RecNum = rows(CAT);
+	fprintf("\n")
+	fprintf("Record Deleted.  Press any key to continue. ")
+	kbhit(); clear ans
+case {"N","n"}
+	CAT = CAT;
+	RecNum = rows(CAT);
+	fprintf("\n")
+	fprintf("No ecord Deleted.  Press any key to continue. ")
+	kbhit(); clear ans
+endswitch
 
-# Reset number of records
-RecNum = rows(CAT);
-
-fprintf("\n")
-fprintf("Record Deleted.  Press any key to continue.\n")
-kbhit(); clear ans
 endfunction
+# ------- EOF -----------------------------------------------------------------
