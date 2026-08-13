@@ -11,14 +11,14 @@ if (nargin ~= 0)
 endif
 Degs = input("Angle degrees (0-180⁰, no decimals): ","s");
 DegTmp = Degs; Degs = str2double(Degs);
-while Degs < 0 || Degs > 180 || isnan(Degs) || any(toascii(DegTmp) == 46)
+while Degs < 0 || Degs > 180 || isnan(Degs) || any(unicode2native(DegTmp) == 46)
 	fprintf("Out of range: 0 and 180 degrees, please.\n")
 	Degs = input("Angle degrees (0-180⁰, no decimals): ","s");
 	DegTmp = Degs; Degs = str2double(Degs);
 endwhile
 minutes = input("Angle minutes (0-59, no decimals): ","s");
 minTmp = minutes; minutes = str2double(minutes);
-while minutes < 0 || minutes > 59 || isnan(minutes) || any(toascii(minTmp) == 46)
+while minutes < 0 || minutes > 59 || isnan(minutes) || any(unicode2native(minTmp) == 46)
 	fprintf("Out of range: 0 and 59 minutes, please.\n")
 	minutes = input("Angle minutes (0-59, no decimals): ","s");
 	minTmp = minutes; minutes = str2double(minutes);
@@ -33,3 +33,4 @@ dcml2 = seconds/3600;
 DcmlAng = Degs + dcml1 + dcml2;
 fprintf("%d⁰ %d' %0.5f"" is %0.5f degrees.\n\n",Degs,minutes,seconds,DcmlAng)
 endfunction
+# ------- EOF -----------------------------------------------------------------
