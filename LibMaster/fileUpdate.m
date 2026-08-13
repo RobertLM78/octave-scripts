@@ -31,8 +31,8 @@ if HowMuch == 0  # But first assign the outputs
 	return
 endif
 ###################################
-while isnan(HowMuch) || any(toascii(HowMuchTmp) == 46)  || HowMuch < 0
-	fprintf("Enter an integer.\n")
+while isnan(HowMuch) || any(unicode2native(HowMuchTmp) == 46)  || HowMuch < 0
+	fprintf("Enter a positive integer.\n")
 	HowMuch = input("How many records to enter?: ","s");
 	HowMuchTmp = HowMuch; HowMuch = str2double(HowMuch);
 	####  Go back to Main Script   ####
@@ -122,9 +122,9 @@ else
 	end
 	FCchck = fclose(fID);
 	if FCchck == 0
-		fprintf("File appended successfully.  Press any key to continue.\n")
+		fprintf("File appended successfully.  Press any key to continue. ")
 	else
-		fprintf("!File not closed!  Press any key to continue.\n")
+		fprintf("!File not closed!  Press any key to continue. ")
 	endif
 endif
 kbhit(); clear ans

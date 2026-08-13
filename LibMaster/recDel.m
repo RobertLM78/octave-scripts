@@ -29,7 +29,7 @@ if DELrec == 0
 	return
 endif
 ###################################
-while DELrec < 0 || DELrec > rows(CAT) || isnan(DELrec) || any(toascii(DELrecTmp) == 46)
+while DELrec < 0 || DELrec > rows(CAT) || isnan(DELrec) || any(unicode2native(DELrecTmp) == 46)
 	fprintf("No such record number.\n")
 	DELrec = input("Record to Delete?: ","s");
 	DELrecTmp = DELrec; DELrec = str2double(DELrec);
@@ -71,7 +71,7 @@ case {"N","n"}
 	CAT = CAT;
 	RecNum = rows(CAT);
 	fprintf("\n")
-	fprintf("No ecord Deleted.  Press any key to continue. ")
+	fprintf("No record Deleted.  Press any key to continue. ")
 	kbhit(); clear ans
 endswitch
 
