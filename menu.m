@@ -48,7 +48,7 @@ SlctnChk = Slctn;
 Slctn = str2double(Slctn);
 fprintf("\n")
 # Check the input and try again
-while Slctn < 1 || Slctn > noItems || any(toascii(SlctnChk) == 46)
+while Slctn < 1 || Slctn > noItems || any(unicode2native(SlctnChk) == 46)
 	fprintf("%s\n%s\n\n",MenuItems(1,:),undrln(1,:))
 	for k = 2:rows(MenuItems);
 		fprintf("  [%d]  %s\n",(k-1),MenuItems(k,:))
