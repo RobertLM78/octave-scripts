@@ -43,9 +43,9 @@ else
 	end
 	FCchck = fclose(fID);
 	if FCchck == 0
-		fprintf("File saved successfully.  Press any key to continue.\n")
+		fprintf("File saved successfully.  Press any key to continue. ")
 	else
-		fprintf("!File not closed!  Press any key to continue.\n")
+		fprintf("!File not closed!  Press any key to continue. ")
 	endif
 endif
 kbhit(); clear ans

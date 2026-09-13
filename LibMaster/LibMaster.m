@@ -1,5 +1,5 @@
 # Title: LibMaster.m - A port of the RBL classic program to OCTAVE
-# Version: 1.2 - May 2017
+# Version: 1.2.2 - Sept 2026
 # Author: Robert Lock - beannachtai@homtail.com
 # License: GPL v3
 # About:
@@ -12,7 +12,7 @@ splash();
 ####  Initializations  ####
 clear,clc, close all
 CONT = 1; KbIN = "0"; # CONTinue with the program; KeyboardINput
-menuPart1 = ["LibMaster-1.2";"Author Search";"Title Search";"Title Browser";"Subject Search"];
+menuPart1 = ["LibMaster-1.2.2";"Author Search";"Title Search";"Title Browser";"Subject Search"];
 menuPart2 = ["Sort by Title";"Data Entry Mode";"Delete a Record";"Load File";"Save File"];
 menuPart3 = ["Save & Quit";"Quit";"Help: display readme"];
 global MenuItems = [menuPart1;menuPart2;menuPart3];
@@ -22,8 +22,9 @@ for k = 1:length(deblank(MenuItems(1,:))); # Create an underline for the title
 	undrln(1,k) = "-";
 end
 clear menuPart1 menuPart2 menuPart3
+RecNum = 0;
 # Null variables if starting a new catalog or just haven't loaded one yet
-RecNum = 0; TIT{1,1} = []; AUT{1,1} = []; AUT{1,2} = []; AUT{1,3} = []; SUBJ{1,1} = []; NTS{1,1} = [];
+TIT{1,1} = []; AUT{1,1} = []; AUT{1,2} = []; AUT{1,3} = []; SUBJ{1,1} = []; NTS{1,1} = [];
 CAT = strCat(TIT,AUT,SUBJ,NTS);
 ###########################
 
@@ -40,7 +41,7 @@ while CONT ~= 0
 	## Wait for user input ##
 	KbIN = lower(kbhit());
 	## Check the input & keep trying until its right ##
-	while toascii(KbIN) - 96 < 1  || toascii(KbIN) - 96 > noItems
+	while double(KbIN) - 96 < 1  || double(KbIN) - 96 > noItems
 		KbIN = lower(kbhit());
 	endwhile
 	#############################################
@@ -127,6 +128,8 @@ while CONT ~= 0
 			CAT = strCat(TIT,AUT,SUBJ,NTS);
 			fileSave(CAT,RecNum);            # If there is - do save
 			CONT = 0; # Send the signal to quit (CONT ~= 0) == 0
+      clc,clear; ## Housekeeping ##
+      return      ## This is proper order: clc,clear **THEN** return
 		endif
 		clc;
 	elseif KbIN == "k"
@@ -134,7 +137,8 @@ while CONT ~= 0
 		# OPTION K QUIT #
 		#################
 		CONT = 0; # Send the signal to quit (CONT ~= 0) == 0
-		clc;
+		clc,clear; ## Housekeeping ##
+    return      ## This is proper order: clc,clear **THEN** return
 	elseif KbIN == "l"
 		##########################
 		# OPTION L Help / readme #

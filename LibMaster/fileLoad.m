@@ -50,9 +50,9 @@ else
 	endwhile
 	FCchck = fclose(fID);
 	if FCchck == 0
-		fprintf("File loaded successfully.  Press any key to continue.\n")
+		fprintf("File loaded successfully.  Press any key to continue. ")
 	else
-		fprintf("!File not closed!  Press any key to continue.\n")
+		fprintf("!File not closed!  Press any key to continue. ")
 	endif
 endif
 RecNum = N;

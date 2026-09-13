@@ -1,5 +1,5 @@
 # Title: fileSort.m - A function for LibMaster
-# Version: 0.2; May 2017 ; Now ignores preceeding articles in titles
+# Version: 0.5; Sept 2026 ; Now ignores preceeding articles in titles
 # Author: Robert Lock - beannachtai@homtail.com
 # License: GPL v3
 # Usage:  CATalog = fileSort(CATalog,RecordNumbers)
@@ -10,6 +10,12 @@ if (nargin ~= 2)
 	help fileSort
 	return
 endif
+tic;  # Time this function
+## Progress bar -- NEW ######################
+pBar = waitbar(0, 'Processing...');
+pBarStep = 5*RecNum;   #2*rows(TIT) + 3*RecNum;
+pBarNum = 0;
+#############################################
 # Display title and name of function
 clc;
 global MenuItems
@@ -20,63 +26,56 @@ end
 fprintf("%s\n%s\n\n",Topic,undrln)
 
 # Break up CAT into the cell arrays
-for k = 1:rows(CAT)
-	# Break off Titles into (rows(CAT) x 1) cell 'TIT'
-	[newStr,StrBal] = strtok(CAT{k},":");
-	TIT{k,1} = newStr;
-	# Break off the Authors into (rows(CAT) x 3) cell 'AUT'
-	for q = 1:3
-		[newStr,StrBal] = strtok(StrBal,":");
-		AUT{k,q} = newStr;
-	end
-	# Break off Subjects into (rows(CAT) x 1) cell 'SUBJ'
-	[newStr,StrBal] = strtok(StrBal,":");
-	SUBJ{k,1} = newStr;
-	# Break off Notes into (rows(CAT) x 1) cell 'NTS'
-	[newStr,StrBal] = strtok(StrBal,":");
-	NTS{k,1} = newStr;
-end
+fprintf("Calling on strDiv routine...\n")
+[TIT,AUT,SUBJ,NTS] = strDiv(CAT);
 
 # 'Suffix' preceeding articles in title
 N = 0;
 fprintf("Removing preceeding articles from titles:\n")
 for k = 1:rows(TIT)
+  ## Progress bar -- NEW ######################
+  pBarNum += 1;
+  waitbar(pBarNum/pBarStep,pBar);
+  #############################################
 	TITtmp = TIT{k,1};
+  # Check to see if title is less than "The " (4 characters) long
+  if length(TITtmp) < 4
+    TITtmp = [TITtmp,"  "];  # 2 extra spaces, just to be sure
+  endif
 	Art0chk = TITtmp(1,1:2) == "A ";
 	Art2chk = TITtmp(1,1:3) == "An ";
 	Art1chk = TITtmp(1,1:4) == "The ";
-	# Place preceeding article in title at the end such that TITtmp = "<Some title with leading 'The'>,The"
+	# Place preceeding article in title at the end such that TITtmp="<Some title with leading 'The'>,The "
 	if Art0chk == [1,1];
 		N = N + 1;
 		fprintf("%d ",N)
 		TIT{k,1} = [TITtmp(1,3:length(TITtmp)),",",TITtmp(1,1:2)];
-		system("sleep 0.0125s");
 	elseif Art2chk == [1,1,1]
 		N = N + 1;
 		fprintf("%d ",N)
 		TIT{k,1} = [TITtmp(1,4:length(TITtmp)),",",TITtmp(1,1:3)];
-		system("sleep 0.0125s");
 	elseif Art1chk == [1,1,1,1]
 		N = N + 1;
 		fprintf("%d ",N)
 		TIT{k,1} = [TITtmp(1,5:length(TITtmp)),",",TITtmp(1,1:4)];
-		system("sleep 0.0125s");
 	endif
 end
 fprintf("\n\n")
 
 # Concatenate CAT
-for k = 1:rows(TIT)
-	CAT{k,1} = [TIT{k,1},":",AUT{k,1},":",AUT{k,2},":",AUT{k,3},":",SUBJ{k,1},":",NTS{k,1},":;",num2str(k)];
-end
+fprintf("Calling on strCat routine...\n")
+CAT = strCat(TIT,AUT,SUBJ,NTS);
 
 # Break off record numbers
 fprintf("Removing record numbers:\n")
 for k = 1:RecNum
+  ## Progress bar -- NEW ######################
+  pBarNum += 1;
+  waitbar(pBarNum/pBarStep,pBar);
+  #############################################
 	fprintf("%d ",k)
 	[newStr,StrBal] = strtok(CAT{k},";");
 	CAT{k,1} = newStr;
-	system("sleep 0.0125s");
 end
 fprintf("\n\n")
 
@@ -84,60 +83,59 @@ fprintf("\n\n")
 CAT = sort(CAT);
 fprintf("Alphabetizing: ")
 for k = 1:RecNum
+  ## Progress bar -- NEW ######################
+  pBarNum += 1;
+  waitbar(pBarNum/pBarStep,pBar);
+  #############################################
 	fprintf(". ")
-	system("sleep 0.025s");
 end
 fprintf("\n\n")
 
 # Add the record numbers back
 fprintf("Replacing record numbers:\n")
 for k = 1:RecNum
+  ## Progress bar -- NEW ######################
+  pBarNum += 1;
+  waitbar(pBarNum/pBarStep,pBar);
+  #############################################
 	fprintf("%d ",k)
 	CAT{k,1} = [CAT{k,1},";",num2str(k)];
-	system("sleep 0.0125s");
 end
 fprintf("\n\n")
 
 # Break up CAT into the cell arrays
-for k = 1:rows(CAT)
-	# Break off Titles into (rows(CAT) x 1) cell 'TIT'
-	[newStr,StrBal] = strtok(CAT{k},":");
-	TIT{k,1} = newStr;
-	# Break off the Authors into (rows(CAT) x 3) cell 'AUT'
-	for q = 1:3
-		[newStr,StrBal] = strtok(StrBal,":");
-		AUT{k,q} = newStr;
-	end
-	# Break off Subjects into (rows(CAT) x 1) cell 'SUBJ'
-	[newStr,StrBal] = strtok(StrBal,":");
-	SUBJ{k,1} = newStr;
-	# Break off Notes into (rows(CAT) x 1) cell 'NTS'
-	[newStr,StrBal] = strtok(StrBal,":");
-	NTS{k,1} = newStr;
-end
+fprintf("Calling on strDiv routine...\n")
+[TIT,AUT,SUBJ,NTS] = strDiv(CAT);
 
 # 'Re-prefix' preceeding articles
 N = 0;
 fprintf("Replacing preceeding articles to titles:\n")
 for k = 1:rows(TIT)
+  ## Progress bar -- NEW ######################
+  pBarNum += 1;
+  waitbar(pBarNum/pBarStep,pBar);
+  #############################################
 	if strfind(TIT{k,:},",") > 1
 		N = N + 1;
 		fprintf("%d ",N)
 		[newStr,StrBal] = strtok(TIT{k},",");
 		[Art,StrBal] = strtok(StrBal,",");
 		TIT{k,1} = [strtrim(Art)," ",strtrim(newStr)];
-		system("sleep 0.0125s");
 	endif
 end
 fprintf("\n\n")
 
 # Concatenate CAT
-for k = 1:rows(TIT)
-	CAT{k,1} = [TIT{k,1},":",AUT{k,1},":",AUT{k,2},":",AUT{k,3},":",SUBJ{k,1},":",NTS{k,1},":;",num2str(k)];
-end
-
+fprintf("Calling on strCat routine...\n")
+CAT = strCat(TIT,AUT,SUBJ,NTS);
+fprintf("\n\n")
+toc; # Print elapsed time
 # Closing fprintf
-fprintf("Catalog sorted.  Press any key to continue.\n")
+fprintf("Catalog sorted.  Press any key to continue. ")
+## Progress bar -- NEW ######################
+  pause(0.75)
+  close(pBar)
+#############################################
 kbhit(); clear ans
 endfunction
 # ------- EOF -----------------------------------------------------------------

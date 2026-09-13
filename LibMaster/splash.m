@@ -8,8 +8,8 @@ function splash()
 if nargin ~= 0
 	help splash
 endif
-clc; clear all
-fprintf("Library Master 1.1; Copyright (C) 2017  Robert Lock (RobertLM78) - beannachtai@hotmail.com\n")
+clc
+fprintf("Library Master 1.2.2; Copyright (C) 2017  Robert Lock (RobertLM78) - beannachtai@hotmail.com\n")
 fprintf("This program comes with ABSOLUTELY NO WARRANTY; for details press 'w'.\n")
 fprintf("This is free software, and you are welcome to redistribute it\n")
 fprintf("under certain conditions; press `c' for details.  Otherwise press any key.")
@@ -18,10 +18,10 @@ KbIN = (kbhit()); KbIN = lower(KbIN);
 
 if KbIN == "c"
 	#######################
-        # OPTION C Conditions #
+    # OPTION C Conditions #
 	#######################
 	fprintf("\n\n")
-	fprintf("Library Master 1.1 - A port of the RBL classic program to OCTAVE\n")
+	fprintf("Library Master 1.2.2 - A port of the RBL classic program to OCTAVE\n")
 	fprintf("Copyright (C) 2017  Robert Lock (RobertLM78)\n\n")
 	fprintf("This program is free software: you can redistribute it and/or modify\n")
 	fprintf("it under the terms of the GNU General Public License as published by\n")
@@ -52,7 +52,7 @@ elseif KbIN == "w"
 	fprintf("Press 'c' for conditions or any key to continue. "); KbIN = (kbhit()); KbIN = lower(KbIN);
 	if KbIN == "c"
 		fprintf("\n\n")
-		fprintf("Library Master 1.1 - A port of the RBL classic program to OCTAVE\n")
+		fprintf("Library Master 1.2.2 - A port of the RBL classic program to OCTAVE\n")
 		fprintf("Copyright (C) 2017  Robert Lock (RobertLM78)\n\n")
 		fprintf("This program is free software: you can redistribute it and/or modify\n")
 		fprintf("it under the terms of the GNU General Public License as published by\n")

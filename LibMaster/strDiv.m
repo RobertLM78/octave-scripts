@@ -2,7 +2,7 @@
 # Version: 0.1; May 2017
 # Author: Robert Lock - beannachtai@homtail.com
 # License: GPL v3
-# Usage:  [CAT,TIT,AUT,SUBJ,NTS] = strDiv(CAT)
+# Usage:  [TIT,AUT,SUBJ,NTS] = strDiv(CAT)
 # About: String Divide - strtok CAT strings into appropriate cell arrays
 # Notes: This function is not passed RecNum for input arg.
 # -----------------------------------------------------------------------------

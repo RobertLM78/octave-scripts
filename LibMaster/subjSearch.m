@@ -1,5 +1,5 @@
 # Title: subjSearch.m - A function for LibMaster
-# Version: 0.1; May 2017
+# Version: 0.2; Sept 2026 (Replace findstr with strfind)
 # Author: Robert Lock - beannachtai@homtail.com
 # License: GPL v3
 # Usage:  subjSearch(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
@@ -39,8 +39,8 @@ endwhile
 # Start searching through SUBJ
 for k = 1:RecNum
 	fprintf("%d ",k)
-	system("sleep 0.025s");
-	if findstr(lower(SUBJ{k,1}),SUBJsrch) >= 1
+#	system("sleep 0.025s");
+	if strfind(lower(SUBJ{k,1}),SUBJsrch) >= 1
 		fprintf("\n")
 		fprintf("Title:  %s\n",TIT{k,1})
 		fprintf("Author 1:   %s\n",AUT{k,1})
