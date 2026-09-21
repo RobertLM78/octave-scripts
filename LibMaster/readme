@@ -139,8 +139,8 @@ Enter '<def>' (no quotes) for the default filename (catalog.dat).  Otherwise
 enter the name desired, if no path is given, then the path will be the one the
 main script was launched from.
 Updating is fairly straightforward,  just enter the number of records to add,
-then enter the data.  Up to three authors per title may be entered.  The FILE
-IS *APPENDED* when finished.
+then enter the data.  Up to three authors per title may be entered.  The FILE IS
+NOT SAVED when finished.
 
 ##########################################
 #  Sorting Catalog and Deleting Records  #
