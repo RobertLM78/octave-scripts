@@ -42,7 +42,7 @@ for k = 1:RecNum
 #	system("sleep 0.025s");
 	if strfind(lower(SUBJ{k,1}),SUBJsrch) >= 1
 		fprintf("\n")
-		fprintf("Title:  %s\n",TIT{k,1})
+		fprintf("Title:      %s\n",TIT{k,1})
 		fprintf("Author 1:   %s\n",AUT{k,1})
 		fprintf("Author 2:   %s\n",AUT{k,2})
 		fprintf("Author 3:   %s\n",AUT{k,3})

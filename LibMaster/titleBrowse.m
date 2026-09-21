@@ -57,7 +57,7 @@ while k ~= RecNum  #### SO USE A while-loop
 			# Display title and name of function
 			clc;
 			fprintf("%s\n%s\n\n",Topic,undrln)
-			fprintf("Title:  %s\n",TIT{RecMat(1,queryDisp),1})
+			fprintf("Title:      %s\n",TIT{RecMat(1,queryDisp),1})
 			fprintf("Author 1:   %s\n",AUT{RecMat(1,queryDisp),1})
 			fprintf("Author 2:   %s\n",AUT{RecMat(1,queryDisp),2})
 			fprintf("Author 3:   %s\n",AUT{RecMat(1,queryDisp),3})
@@ -110,7 +110,7 @@ while k ~= RecNum  #### SO USE A while-loop
 			# Display title and name of function
 			clc;
 			fprintf("%s\n%s\n\n",Topic,undrln)
-			fprintf("Title:  %s\n",TIT{RecMat(1,queryDisp),1})
+			fprintf("Title:      %s\n",TIT{RecMat(1,queryDisp),1})
 			fprintf("Author 1:   %s\n",AUT{RecMat(1,queryDisp),1})
 			fprintf("Author 2:   %s\n",AUT{RecMat(1,queryDisp),2})
 			fprintf("Author 3:   %s\n",AUT{RecMat(1,queryDisp),3})
