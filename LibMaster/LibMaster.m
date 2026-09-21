@@ -1,18 +1,21 @@
 # Title: LibMaster.m - A port of the RBL classic program to OCTAVE
-# Version: 1.2.2 - Sept 2026
+# Version: 1.3.0 - Sept 2026
 # Author: Robert Lock - beannachtai@homtail.com
 # License: GPL v3
 # About:
 # -----------------------------------------------------------------------------
 clear
+LibMasterTitle = "LibMaster-1.3.0";
 ### Splash ###
-splash();
+splash(LibMasterTitle);
 ##############
 
 ####  Initializations  ####
 clear,clc, close all
 CONT = 1; KbIN = "0"; # CONTinue with the program; KeyboardINput
-menuPart1 = ["LibMaster-1.2.2";"Author Search";"Title Search";"Title Browser";"Subject Search"];
+FileName = "--.dat"; RecNum = 0;
+LibMasterTitle = "LibMaster-1.3.0";
+menuPart1 = [LibMasterTitle;"Author Search";"Title Search";"Title Browser";"Subject Search"];
 menuPart2 = ["Sort by Title";"Data Entry Mode";"Delete a Record";"Load File";"Save File"];
 menuPart3 = ["Save & Quit";"Quit";"Help: display readme"];
 global MenuItems = [menuPart1;menuPart2;menuPart3];
@@ -35,7 +38,7 @@ while CONT ~= 0
 	## Print the Menu ##
 	fprintf("%s\n%s\n\n",MenuItems(1,:),undrln(1,:))
 	for k = 2:rows(MenuItems)
- 		fprintf("  [%s]  %s\n",char(k+63),MenuItems(k,:))  # change 63 to 95 for lowercase
+ 		fprintf("  [%s]  %s\n",char(k+63),MenuItems(k,:))  # +63 for uppercase starting with 'A'
 	end
 	fprintf("\n\nPress a menu item letter. ")
 	## Wait for user input ##
@@ -51,32 +54,52 @@ while CONT ~= 0
 		##########################
 		# OPTION A Author Search #
 		##########################
-		authorSearch(TIT,AUT,SUBJ,NTS,RecNum);
-		CONT = 1;
+    if strcmp(CAT{1,1},"::::::;1") == 1  # First check to see if there is anything to save to file
+      fprintf("\n\nNo Data Entered.  Press any key to continue.")
+			kbhit(); clear ans
+		else
+      authorSearch(TIT,AUT,SUBJ,NTS,RecNum);
+      CONT = 1;
+    endif
 	elseif KbIN == "b"
 		#########################
 		# OPTION B Title Search #
 		#########################
-		titleSearch(TIT,AUT,SUBJ,NTS,RecNum);
-		CONT = 1;
+    if strcmp(CAT{1,1},"::::::;1") == 1  # First check to see if there is anything to save to file
+      fprintf("\n\nNo Data Entered.  Press any key to continue.")
+			kbhit(); clear ans
+		else
+		  titleSearch(TIT,AUT,SUBJ,NTS,RecNum);
+		  CONT = 1;
+    endif
 	elseif KbIN == "c"
 		##########################
 		# OPTION C Title Browser #
 		##########################
-		titleBrowse(TIT,AUT,SUBJ,NTS,RecNum);
-		CONT = 1;
+    if strcmp(CAT{1,1},"::::::;1") == 1  # First check to see if there is anything to save to file
+      fprintf("\n\nNo Data Entered.  Press any key to continue.")
+			kbhit(); clear ans
+		else
+		  titleBrowse(TIT,AUT,SUBJ,NTS,RecNum);
+		  CONT = 1;
+    endif
 	elseif KbIN == "d"
 		###########################
 		# OPTION D Subject Search #
 		###########################
-		subjSearch(TIT,AUT,SUBJ,NTS,RecNum);
-		CONT = 1;
+    if strcmp(CAT{1,1},"::::::;1") == 1  # First check to see if there is anything to save to file
+      fprintf("\n\nNo Data Entered.  Press any key to continue.")
+			kbhit(); clear ans
+		else
+		  subjSearch(TIT,AUT,SUBJ,NTS,RecNum);
+		  CONT = 1;
+    endif
 	elseif KbIN == "e"
 		##########################
 		# OPTION E Sort by Title #
 		##########################
 		if strcmp(CAT{1,1},"::::::;1") == 1  # First check to see if there is anything to sort
-			fprintf("\nNo Data Entered.\nPress any key to continue.")
+			fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans    # CONTinue back with the main loop
 		else
 			CAT = fileSort(CAT,RecNum);
@@ -94,14 +117,19 @@ while CONT ~= 0
 		############################
 		# OPTION G Delete a Record #
 		############################
-		[CAT,RecNum] = recDel(CAT);
-		[TIT,AUT,SUBJ,NTS] = strDiv(CAT);
-		CONT = 1;
+    if strcmp(CAT{1,1},"::::::;1") == 1  # First check to see if there is anything to save to file
+      fprintf("\n\nNo Data Entered.  Press any key to continue.")
+			kbhit(); clear ans
+		else
+		  [CAT,RecNum] = recDel(CAT);
+		  [TIT,AUT,SUBJ,NTS] = strDiv(CAT);
+		  CONT = 1;
+    endif
 	elseif KbIN == "h"
 		######################
 		# OPTION H Load File #
 		######################
-		[CAT,RecNum] = fileLoad();
+		[CAT,RecNum,FileName] = fileLoad(CAT,RecNum,FileName);
 		[TIT,AUT,SUBJ,NTS] = strDiv(CAT);
 		CONT = 1;
 	elseif KbIN == "i"
@@ -109,11 +137,11 @@ while CONT ~= 0
 		# OPTION I Save File #
 		######################
 		if strcmp(CAT{1,1},"::::::;1") == 1  # First check to see if there is anything to save to file
-			fprintf("\nNo Data Entered.\nPress any key to continue.")
+			fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans    # CONTinue back with the main loop
 		else
 			CAT = strCat(TIT,AUT,SUBJ,NTS);
-			fileSave(CAT,RecNum);            # If there is - do save
+			FileName = fileSave(CAT,RecNum,FileName);    # If there is - do save
 		endif
 		CONT = 1;
 	elseif KbIN == "j"
@@ -121,12 +149,12 @@ while CONT ~= 0
 		# OPTION J Save & Quit #
 		########################
 		if strcmp(CAT{1,1},"::::::;1") == 1  # First check to see if there is anything to save to file
-			fprintf("\nNo Data Entered.\nPress any key to continue.")
+			fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans    # CONTinue back with the main loop
 			CONT = 1;
 		else
 			CAT = strCat(TIT,AUT,SUBJ,NTS);
-			fileSave(CAT,RecNum);            # If there is - do save
+			FileName = fileSave(CAT,RecNum,FileName);     # If there is - do save
 			CONT = 0; # Send the signal to quit (CONT ~= 0) == 0
       clc,clear; ## Housekeeping ##
       return      ## This is proper order: clc,clear **THEN** return

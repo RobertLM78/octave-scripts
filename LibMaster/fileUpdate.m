@@ -1,5 +1,5 @@
 # Title: fileUpdate.m - A function for LibMaster
-# Version: 0.3; May 2017
+# Version: 0.4; Sept 2026
 # Author: Robert Lock - beannachtai@homtail.com
 # License: GPL v3
 # Usage:  [CATalog,RecordNumbers] = fileUpdate(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
@@ -13,7 +13,7 @@ endif
 # Display title and name of function
 clc;
 global MenuItems
-Topic = [deblank(MenuItems(1,:)),"  -  ","Data Entry Mode"];
+Topic = [deblank(MenuItems(1,:)),"  -  ","Data Entry Mode (no changes written)"];
 for k = 1:length(deblank(Topic)); # Create an underline for the title
 	undrln(1,k) = "-";
 end
@@ -98,35 +98,38 @@ end
 RecNum = rows(TIT);
 
 # Finished updating cell array - wait for user input
-fprintf("Catalog updated.  Press any key to save.\n")
+fprintf("Catalog updated.  Press any key to continue. ")
+#fprintf("Catalog updated.  Press any key to save.\n")
 kbhit(); clear ans
 fprintf("\n")
 
+#{ This functionality is dropped to match the behavior of recDel. ###################################
 # User input for a file name
-FileName = input("Enter a file name (type <DEF> for default file name): ","s");
-while isempty(FileName) == 1
-	FileName = input("Enter a file name (type <DEF> for default file name): ","s");
-endwhile
-# Check to see if default file name is desired
-if strcmpi(FileName,"<DEF>") == 1
-	FileName = "catalog.dat";
-endif
+#FileName = input("Enter a file name (type <DEF> for default file name): ","s");
+#while isempty(FileName) == 1
+#	FileName = input("Enter a file name (type <DEF> for default file name): ","s");
+#endwhile
+### Check to see if default file name is desired
+#if strcmpi(FileName,"<DEF>") == 1
+#	FileName = "catalog.dat";
+#endif
 
-# Save the file
-fID = fopen(FileName,"a");
-if fID == -1
-	fprintf("!Error opening file!\n")
-else
-	for k = RecNum - HowMuch +  1:RecNum  # Slightly different bounds than above in line 41
-		fprintf(fID,"%s\n",CAT{k,1});
-	end
-	FCchck = fclose(fID);
-	if FCchck == 0
-		fprintf("File appended successfully.  Press any key to continue. ")
-	else
-		fprintf("!File not closed!  Press any key to continue. ")
-	endif
-endif
-kbhit(); clear ans
+### Save the file
+#fID = fopen(FileName,"a");
+#if fID == -1
+#	fprintf("!Error opening file!\n")
+#else
+#	for k = RecNum - HowMuch +  1:RecNum  # Slightly different bounds than above in line 41
+#		fprintf(fID,"%s\n",CAT{k,1});
+#	end
+#	FCchck = fclose(fID);
+#	if FCchck == 0
+#		fprintf("File appended successfully.  Press any key to continue. ")
+#	else
+#		fprintf("!File not closed!  Press any key to continue. ")
+#	endif
+#endif
+#kbhit(); clear ans
+#########################################################################################################
 endfunction
 # ------- EOF -----------------------------------------------------------------

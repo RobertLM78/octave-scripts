@@ -1,5 +1,5 @@
 # Title: fileSort.m - A function for LibMaster
-# Version: 0.5; Sept 2026 ; Now ignores preceeding articles in titles
+# Version: 0.5; Sept 2026 ; Now with progress bar
 # Author: Robert Lock - beannachtai@homtail.com
 # License: GPL v3
 # Usage:  CATalog = fileSort(CATalog,RecordNumbers)

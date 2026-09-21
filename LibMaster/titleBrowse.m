@@ -1,5 +1,5 @@
 # Title: titleBrowse.m - A function for LibMaster
-# Version: 0.3; May 2017
+# Version: 0.4; Sept 2026
 # Author: Robert Lock - beannachtai@homtail.com
 # License: GPL v3
 # Usage:  titleBrowse(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
@@ -20,10 +20,12 @@ end
 fprintf("%s\n%s\n\n",Topic,undrln)
 
 # Initialize Row Number and page number
-RowNum = 0; PageN = 0;
+RowNum = 0; PageN = 0; k = 0;
 
 # Begin printing screen pages (length 20 rows)
-for k = 1:RecNum
+#for k = 1:RecNum  #### YOU CANNOT CHANGE A for-loop's INDEX BECAUSE OF OCTAVE'S MULTI-THREADED INTERPRETER
+while k ~= RecNum  #### SO USE A while-loop
+  k = k + 1;
 	RowNum = RowNum + 1;
 	RecMat(1,RowNum) = k;  # Record matrix - stores RecNum in nth element corresponding to nth selected item
 	fprintf("[%d]  %s\n",RowNum,TIT{k,1})
@@ -35,7 +37,7 @@ for k = 1:RecNum
 		fprintf("\n\n")
 		# Enter a number on the list
 		queryDisp = input("Select Title (Enter NULL to continue): ","s");
-		queryDispTmp = queryDisp; queryDisp = str2double(queryDisp);
+		queryDisp = str2double(queryDisp);
 		####  Go back to Main Script   ####
 		if queryDisp == 0
 			return
@@ -44,14 +46,13 @@ for k = 1:RecNum
 		while queryDisp < 1 || queryDisp > 20                              # Max Number of rows
 			fprintf("Choose an item number within range.\n")
 			queryDisp = input("Select Title (Enter NULL to continue): ","s");
-			queryDispTmp = queryDisp; queryDisp = str2double(queryDisp);
+			queryDisp = str2double(queryDisp);
 			####  Go back to Main Script   ####
 			if queryDisp == 0
 				return
 			endif
 			###################################
 		endwhile
-		clear queryDispTmp
 		if queryDisp >= 1 || queryDisp <= 20                               # Max Number of rows
 			# Display title and name of function
 			clc;
@@ -63,6 +64,11 @@ for k = 1:RecNum
 			fprintf("Subject:    %s\n",SUBJ{RecMat(1,queryDisp),1})
 			fprintf("Notes:      %s\n",NTS{RecMat(1,queryDisp),1})
 			fprintf("Press any key to continue.\n")
+
+      ### return to page where query was called
+      k = RecMat(1,queryDisp) - queryDisp;
+      PageN = PageN - 1;
+      ##########################################
 			kbhit(); clear RecMat = []; # empty RecMat
 			# Display title and name of function
 			clc;
@@ -84,7 +90,7 @@ for k = 1:RecNum
 		fprintf("\n\n")
 		# Enter a number on the list
 		queryDisp = input("Select Title (Enter NULL to continue): ","s");
-		queryDispTmp = queryDisp; queryDisp = str2double(queryDisp);
+		queryDisp = str2double(queryDisp);
 		####  Go back to Main Script   ####
 		if queryDisp == 0
 			return
@@ -93,14 +99,13 @@ for k = 1:RecNum
 		while queryDisp < 1 || queryDisp > length(RecMat)                  # Max Number of rows
 			fprintf("Choose an item number within range.\n")
 			queryDisp = input("Select Title (Enter NULL to continue): ","s");
-			queryDispTmp = queryDisp; queryDisp = str2double(queryDisp);
+			queryDisp = str2double(queryDisp);
 			####  Go back to Main Script   ####
 			if queryDisp == 0
 				return
 			endif
 			###################################
 		endwhile
-		clear queryDispTmp
 		if queryDisp >= 1 || queryDisp <= length(RecMat)                   # Max Number of rows
 			# Display title and name of function
 			clc;
@@ -112,6 +117,11 @@ for k = 1:RecNum
 			fprintf("Subject:    %s\n",SUBJ{RecMat(1,queryDisp),1})
 			fprintf("Notes:      %s\n",NTS{RecMat(1,queryDisp),1})
 			fprintf("Press any key to continue.\n")
+
+      ### return to page where query was called
+      k = RecMat(1,queryDisp) - queryDisp;
+      PageN = PageN - 1;
+      ##########################################
 			kbhit();
 			# Display title and name of function
 			clc;
@@ -124,7 +134,8 @@ for k = 1:RecNum
 		endif
 ############################
 	endif
-end
+#endfor
+endwhile
 fprintf("No more titles in catalog.\nPress any key to continue. ")
 kbhit(); clear ans
 endfunction
