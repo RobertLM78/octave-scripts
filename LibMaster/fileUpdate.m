@@ -1,12 +1,12 @@
 # Title: fileUpdate.m - A function for LibMaster
-# Version: 0.4; Sept 2026
+# Version: 0.5; Oct 2026 (upgrade to structure)
 # Author: Robert Lock - beannachtai@homtail.com
 # License: GPL v3
-# Usage:  [CATalog,RecordNumbers] = fileUpdate(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
+# Usage:  [sCATALOG,RecordNumbers] = fileUpdate(sCATALOG,RecordNumbers)
 # About:
 # -----------------------------------------------------------------------------
-function [CAT,RecNum] = fileUpdate(TIT,AUT,SUBJ,NTS,RecNum)
-if (nargin ~= 5)
+function [sCATALOG,CAT,RecNum] = fileUpdate(sCATALOG,CAT,RecNum)
+if (nargin ~= 3)
 	help fileUpdate
 	return
 endif
@@ -24,10 +24,9 @@ HowMuch = input("How many records to enter?: ","s");
 HowMuchTmp = HowMuch; HowMuch = str2double(HowMuch);
 ####  Go back to Main Script   ####
 if HowMuch == 0  # But first assign the outputs
-	for g = 1:rows(TIT)   # CAT
-		CAT{g,1} = [TIT{g,1},":",AUT{g,1},":",AUT{g,2},":",AUT{g,3},":",SUBJ{g,1},":",NTS{g,1},":;",num2str(g)];
-	end
-	RecNum = rows(CAT);   # RecNum
+  CAT = CAT;
+  sCATALOG = sCATALOG;
+	RecNum = length(sCATALOG);
 	return
 endif
 ###################################
@@ -37,10 +36,9 @@ while isnan(HowMuch) || any(unicode2native(HowMuchTmp) == 46)  || HowMuch < 0
 	HowMuchTmp = HowMuch; HowMuch = str2double(HowMuch);
 	####  Go back to Main Script   ####
 	if HowMuch == 0  # But first assign the outputs
-		for g = 1:rows(TIT)   # CAT
-			CAT{g,1} = [TIT{g,1},":",AUT{g,1},":",AUT{g,2},":",AUT{g,3},":",SUBJ{g,1},":",NTS{g,1},":;",num2str(g)];
-		end
-		RecNum = rows(CAT);   # RecNum
+    CAT = CAT;
+    sCATALOG = sCATALOG;
+	  RecNum = length(sCATALOG);
 		return
 	endif
 	###################################
@@ -57,45 +55,48 @@ for k = RecNum + 1:RecNum + HowMuch
 		TITtmp = strtrim(input("Enter a title: ","s"));  # strtrim immediately
 	endwhile
 	for m = 1:RecNum # Check through existing titles - if one is found return gracefully back to main script
-		if strcmpi(TIT{m,1},TITtmp) == 1
+		if strcmpi(sCATALOG(m).TIT,TITtmp) == 1
 			# Assign the outputs before returning
-			for g = 1:rows(TIT)
-				CAT{g,1} = [TIT{g,1},":",AUT{g,1},":",AUT{g,2},":",AUT{g,3},":",SUBJ{g,1},":",NTS{g,1},":;",num2str(g)];
-			end
-			RecNum = rows(CAT);
+      CAT = CAT;
+      sCATALOG = sCATALOG;
+			RecNum = length(sCATALOG);
 			fprintf("Title already entered!!  Press any key to return to menu.");
 			kbhit();
 			return
 		endif
 	end
-	TIT{k,1} = TITtmp;
+	sCATALOG(k).TIT = TITtmp;
 	# Enter authors
-	for m = 1:3
-		AUT{k,m} = strtrim(input("Enter author(1 at a time,up to 3): ","s"));  # strtrim immediately
-		if isempty(AUT{k,m}) == 1
-			AUT{k,m} = " ";
-		endif
-	end
+  sCATALOG(k).AUT1 = strtrim(input("Enter author(1 of up to 3): ","s"));  # strtrim immediately
+  if isempty(sCATALOG(k).AUT1) == 1
+    sCATALOG(k).AUT1 = " ";
+  endif
+  sCATALOG(k).AUT2 = strtrim(input("Enter author(2 of up to 3): ","s"));  # strtrim immediately
+  if isempty(sCATALOG(k).AUT2) == 1
+    sCATALOG(k).AUT2 = " ";
+  endif
+  sCATALOG(k).AUT3 = strtrim(input("Enter author(3 of up to 3): ","s"));  # strtrim immediately
+  if isempty(sCATALOG(k).AUT3) == 1
+    sCATALOG(k).AUT3 = " ";
+  endif
 	# Enter subject
-	SUBJ{k,1} = upper(strtrim(input("Enter subject:  ","s")));  # strtrim immediately ; make sure the subject is in CAPS
-	if isempty(SUBJ{k,1}) == 1
-		SUBJ{k,1} = "no subject assigned";
+	sCATALOG(k).SUBJ = upper(strtrim(input("Enter subject:  ","s")));  # strtrim immediately ; make sure the subject is in CAPS
+	if isempty(sCATALOG(k).SUBJ) == 1
+		sCATALOG(k).SUBJ = "NoS";
 	endif
 	# Enter Notes
-	NTS{k,1} = strtrim(input("Enter notes:    ","s"));  # strtrim immediately
-	if isempty(NTS{k,1}) == 1
+	sCATALOG(k).NTS = strtrim(input("Enter notes:    ","s"));  # strtrim immediately
+	if isempty(sCATALOG(k).NTS) == 1
 		NTS{k,1} = " ";
 	endif
 	fprintf("\n")
 end
 
 # Output vars.
-# Concantenate the CAT strings up
-for k = 1:rows(TIT)
-	CAT{k,1} = [TIT{k,1},":",AUT{k,1},":",AUT{k,2},":",AUT{k,3},":",SUBJ{k,1},":",NTS{k,1},":;",num2str(k)];
-end
+# Rebuild CAT cell array
+CAT = struct2CAT(sCATALOG);
 # Update the Number of Records
-RecNum = rows(TIT);
+RecNum = length(sCATALOG);
 
 # Finished updating cell array - wait for user input
 fprintf("Catalog updated.  Press any key to continue. ")
@@ -103,33 +104,6 @@ fprintf("Catalog updated.  Press any key to continue. ")
 kbhit(); clear ans
 fprintf("\n")
 
-#{ This functionality is dropped to match the behavior of recDel. ###################################
-# User input for a file name
-#FileName = input("Enter a file name (type <DEF> for default file name): ","s");
-#while isempty(FileName) == 1
-#	FileName = input("Enter a file name (type <DEF> for default file name): ","s");
-#endwhile
-### Check to see if default file name is desired
-#if strcmpi(FileName,"<DEF>") == 1
-#	FileName = "catalog.dat";
-#endif
-
-### Save the file
-#fID = fopen(FileName,"a");
-#if fID == -1
-#	fprintf("!Error opening file!\n")
-#else
-#	for k = RecNum - HowMuch +  1:RecNum  # Slightly different bounds than above in line 41
-#		fprintf(fID,"%s\n",CAT{k,1});
-#	end
-#	FCchck = fclose(fID);
-#	if FCchck == 0
-#		fprintf("File appended successfully.  Press any key to continue. ")
-#	else
-#		fprintf("!File not closed!  Press any key to continue. ")
-#	endif
-#endif
-#kbhit(); clear ans
 #########################################################################################################
 endfunction
 # ------- EOF -----------------------------------------------------------------

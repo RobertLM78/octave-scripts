@@ -1,19 +1,19 @@
 # Title: fileSort.m - A function for LibMaster
-# Version: 0.5; Sept 2026 ; Now with progress bar
+# Version: 0.6; Oct 2026 ; Now with progress bar  (upgraded to structure)
 # Author: Robert Lock - beannachtai@homtail.com
 # License: GPL v3
-# Usage:  CATalog = fileSort(CATalog,RecordNumbers)
+# Usage:  sCATALOG = fileSort(sCATALOG)
 # About: no changes written to file
 # -----------------------------------------------------------------------------
-function CAT = fileSort(CAT,RecNum)
-if (nargin ~= 2)
+function [sCATALOG,CAT] = fileSort(sCATALOG)
+if (nargin ~= 1)
 	help fileSort
 	return
 endif
 tic;  # Time this function
 ## Progress bar -- NEW ######################
 pBar = waitbar(0, 'Processing...');
-pBarStep = 5*RecNum;   #2*rows(TIT) + 3*RecNum;
+pBarStep = 3*length(sCATALOG);
 pBarNum = 0;
 #############################################
 # Display title and name of function
@@ -25,19 +25,15 @@ for k = 1:length(deblank(Topic)); # Create an underline for the title
 end
 fprintf("%s\n%s\n\n",Topic,undrln)
 
-# Break up CAT into the cell arrays
-fprintf("Calling on strDiv routine...\n")
-[TIT,AUT,SUBJ,NTS] = strDiv(CAT);
-
 # 'Suffix' preceeding articles in title
 N = 0;
 fprintf("Removing preceeding articles from titles:\n")
-for k = 1:rows(TIT)
+for k = 1:length(sCATALOG)
   ## Progress bar -- NEW ######################
   pBarNum += 1;
   waitbar(pBarNum/pBarStep,pBar);
   #############################################
-	TITtmp = TIT{k,1};
+	TITtmp = sCATALOG(k).TIT;
   # Check to see if title is less than "The " (4 characters) long
   if length(TITtmp) < 4
     TITtmp = [TITtmp,"  "];  # 2 extra spaces, just to be sure
@@ -49,40 +45,26 @@ for k = 1:rows(TIT)
 	if Art0chk == [1,1];
 		N = N + 1;
 		fprintf("%d ",N)
-		TIT{k,1} = [TITtmp(1,3:length(TITtmp)),",",TITtmp(1,1:2)];
+		sCATALOG(k).TIT = [TITtmp(1,3:length(TITtmp)),",",TITtmp(1,1:2)];
 	elseif Art2chk == [1,1,1]
 		N = N + 1;
 		fprintf("%d ",N)
-		TIT{k,1} = [TITtmp(1,4:length(TITtmp)),",",TITtmp(1,1:3)];
+		sCATALOG(k).TIT = [TITtmp(1,4:length(TITtmp)),",",TITtmp(1,1:3)];
 	elseif Art1chk == [1,1,1,1]
 		N = N + 1;
 		fprintf("%d ",N)
-		TIT{k,1} = [TITtmp(1,5:length(TITtmp)),",",TITtmp(1,1:4)];
+		sCATALOG(k).TIT = [TITtmp(1,5:length(TITtmp)),",",TITtmp(1,1:4)];
 	endif
 end
 fprintf("\n\n")
 
-# Concatenate CAT
-fprintf("Calling on strCat routine...\n")
-CAT = strCat(TIT,AUT,SUBJ,NTS);
-
-# Break off record numbers
-fprintf("Removing record numbers:\n")
-for k = 1:RecNum
-  ## Progress bar -- NEW ######################
-  pBarNum += 1;
-  waitbar(pBarNum/pBarStep,pBar);
-  #############################################
-	fprintf("%d ",k)
-	[newStr,StrBal] = strtok(CAT{k},";");
-	CAT{k,1} = newStr;
-end
-fprintf("\n\n")
-
 # Alphabetize the catalog
-CAT = sort(CAT);
+sortsCATALOG = {sCATALOG.TIT};
+[~,idx] = sort(sortsCATALOG);
+sCATALOG = sCATALOG(idx);
+###############################
 fprintf("Alphabetizing: ")
-for k = 1:RecNum
+for k = 1:length(sCATALOG)
   ## Progress bar -- NEW ######################
   pBarNum += 1;
   waitbar(pBarNum/pBarStep,pBar);
@@ -91,43 +73,27 @@ for k = 1:RecNum
 end
 fprintf("\n\n")
 
-# Add the record numbers back
-fprintf("Replacing record numbers:\n")
-for k = 1:RecNum
-  ## Progress bar -- NEW ######################
-  pBarNum += 1;
-  waitbar(pBarNum/pBarStep,pBar);
-  #############################################
-	fprintf("%d ",k)
-	CAT{k,1} = [CAT{k,1},";",num2str(k)];
-end
-fprintf("\n\n")
-
-# Break up CAT into the cell arrays
-fprintf("Calling on strDiv routine...\n")
-[TIT,AUT,SUBJ,NTS] = strDiv(CAT);
-
 # 'Re-prefix' preceeding articles
 N = 0;
 fprintf("Replacing preceeding articles to titles:\n")
-for k = 1:rows(TIT)
+for k = 1:length(sCATALOG)
   ## Progress bar -- NEW ######################
   pBarNum += 1;
   waitbar(pBarNum/pBarStep,pBar);
   #############################################
-	if strfind(TIT{k,:},",") > 1
+	if strfind(sCATALOG(k).TIT,",") > 1
 		N = N + 1;
 		fprintf("%d ",N)
-		[newStr,StrBal] = strtok(TIT{k},",");
+		[newStr,StrBal] = strtok(sCATALOG(k).TIT,",");
 		[Art,StrBal] = strtok(StrBal,",");
-		TIT{k,1} = [strtrim(Art)," ",strtrim(newStr)];
+		sCATALOG(k).TIT = [strtrim(Art)," ",strtrim(newStr)];
 	endif
 end
 fprintf("\n\n")
 
-# Concatenate CAT
-fprintf("Calling on strCat routine...\n")
-CAT = strCat(TIT,AUT,SUBJ,NTS);
+# Rebuild CAT cell array
+fprintf("Updating CATalog array...\n")
+CAT = struct2CAT(sCATALOG);
 fprintf("\n\n")
 toc; # Print elapsed time
 # Closing fprintf

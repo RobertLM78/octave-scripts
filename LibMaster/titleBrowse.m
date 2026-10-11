@@ -1,12 +1,12 @@
 # Title: titleBrowse.m - A function for LibMaster
-# Version: 0.4; Sept 2026
+# Version: 0.5; Oct 2026 (upgrade to structure)
 # Author: Robert Lock - beannachtai@homtail.com
 # License: GPL v3
-# Usage:  titleBrowse(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
+# Usage:  titleBrowse(sCATALOG,RecNum)
 # About:
 # -----------------------------------------------------------------------------
-function titleBrowse(TIT,AUT,SUBJ,NTS,RecNum)
-if (nargin ~= 5)
+function titleBrowse(sCATALOG,RecNum)
+if (nargin ~= 2)
 	help titleBrowse
 	return
 endif
@@ -28,7 +28,7 @@ while k ~= RecNum  #### SO USE A while-loop
   k = k + 1;
 	RowNum = RowNum + 1;
 	RecMat(1,RowNum) = k;  # Record matrix - stores RecNum in nth element corresponding to nth selected item
-	fprintf("[%d]  %s\n",RowNum,TIT{k,1})
+	fprintf("[%d]  %s\n",RowNum,sCATALOG(k).TIT)
 ##### All screen pages but the last one #####
 	if RowNum == 20                                       # Max Number of rows printed to screen
 		PageN = PageN + 1;    # increment PageN
@@ -57,12 +57,12 @@ while k ~= RecNum  #### SO USE A while-loop
 			# Display title and name of function
 			clc;
 			fprintf("%s\n%s\n\n",Topic,undrln)
-			fprintf("Title:      %s\n",TIT{RecMat(1,queryDisp),1})
-			fprintf("Author 1:   %s\n",AUT{RecMat(1,queryDisp),1})
-			fprintf("Author 2:   %s\n",AUT{RecMat(1,queryDisp),2})
-			fprintf("Author 3:   %s\n",AUT{RecMat(1,queryDisp),3})
-			fprintf("Subject:    %s\n",SUBJ{RecMat(1,queryDisp),1})
-			fprintf("Notes:      %s\n",NTS{RecMat(1,queryDisp),1})
+			fprintf("Title:      %s\n",sCATALOG(RecMat(1,queryDisp)).TIT)
+			fprintf("Author 1:   %s\n",sCATALOG(RecMat(1,queryDisp)).AUT1)
+			fprintf("Author 2:   %s\n",sCATALOG(RecMat(1,queryDisp)).AUT2)
+			fprintf("Author 3:   %s\n",sCATALOG(RecMat(1,queryDisp)).AUT3)
+			fprintf("Subject:    %s\n",sCATALOG(RecMat(1,queryDisp)).SUBJ)
+			fprintf("Notes:      %s\n",sCATALOG(RecMat(1,queryDisp)).NTS)
 			fprintf("Press any key to continue.\n")
 
       ### return to page where query was called
@@ -110,12 +110,12 @@ while k ~= RecNum  #### SO USE A while-loop
 			# Display title and name of function
 			clc;
 			fprintf("%s\n%s\n\n",Topic,undrln)
-			fprintf("Title:      %s\n",TIT{RecMat(1,queryDisp),1})
-			fprintf("Author 1:   %s\n",AUT{RecMat(1,queryDisp),1})
-			fprintf("Author 2:   %s\n",AUT{RecMat(1,queryDisp),2})
-			fprintf("Author 3:   %s\n",AUT{RecMat(1,queryDisp),3})
-			fprintf("Subject:    %s\n",SUBJ{RecMat(1,queryDisp),1})
-			fprintf("Notes:      %s\n",NTS{RecMat(1,queryDisp),1})
+			fprintf("Title:      %s\n",sCATALOG(RecMat(1,queryDisp)).TIT)
+			fprintf("Author 1:   %s\n",sCATALOG(RecMat(1,queryDisp)).AUT1)
+			fprintf("Author 2:   %s\n",sCATALOG(RecMat(1,queryDisp)).AUT2)
+			fprintf("Author 3:   %s\n",sCATALOG(RecMat(1,queryDisp)).AUT3)
+			fprintf("Subject:    %s\n",sCATALOG(RecMat(1,queryDisp)).SUBJ)
+			fprintf("Notes:      %s\n",sCATALOG(RecMat(1,queryDisp)).NTS)
 			fprintf("Press any key to continue.\n")
 
       ### return to page where query was called

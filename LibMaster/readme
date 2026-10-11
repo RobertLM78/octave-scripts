@@ -1,5 +1,5 @@
 ===============================================================================
-| Library Master 1.3.0; A port of the RBL classic program to OCTAVE           |
+| Library Master 2.0.0; A port of the RBL classic program to OCTAVE           |
 |      readme file                                                            |
 ===============================================================================
 This package contains 14 Octave files:
@@ -9,106 +9,18 @@ LibMaster.m
 
 13 Function Modules:
 authorSearch.m
+CAT2struct.m
 fileLoad.m
 fileSave.m
 fileSort.m
 fileUpdate.m
-hlpFn.m    (generic function)
+hlpFn.m
 recDel.m
-splash.m   (generic function)
-strCat.m
-strDiv.m
+splash.m
+struct2CAT.m
 subjSearch.m
 titleBrowse.m
 titleSearch.m
-
-###### Headers ################################################################
-# Title: LibMaster.m - A port of the RBL classic program to OCTAVE
-# Version: 1.3.0 - Sept 2026
-# Author: Robert Lock - beannachtai@homtail.com
-# License: GPL v3
-# About:
-# -----------------------------------------------------------------------------
-# Title: authorSearch.m - A function for LibMaster
-# Version: 0.2; Sept 2026 (Replace findstr with strfind)
-# Author: Robert Lock - beannachtai@homtail.com
-# License: GPL v3
-# Usage:  authorSearch(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
-# About:
-# -----------------------------------------------------------------------------
-# Title: fileLoad.m - A function for LibMaster
-# Version: 0.3; Sept 2026
-# Author: Robert Lock - beannachtai@homtail.com
-# License: GPL v3
-# Usage:  [CATalog,RecordNumbers,filename] = fileLoad(CAT,RecNum,filename);
-# About:
-# -----------------------------------------------------------------------------
-# Title: fileSave.m - A function for LibMaster
-# Version: 0.2; Sept 2026
-# Author: Robert Lock - beannachtai@homtail.com
-# License: GPL v3
-# Usage: FileName = fileSave(CATalog,RecordNumbers,filename)
-# About:
-# -----------------------------------------------------------------------------
-# Title: fileSort.m - A function for LibMaster
-# Version: 0.5; Sept 2026 ; Now with progress bar
-# Author: Robert Lock - beannachtai@homtail.com
-# License: GPL v3
-# Usage:  CATalog = fileSort(CATalog,RecordNumbers)
-# About: no changes written to file
-# -----------------------------------------------------------------------------
-# Title: fileUpdate.m - A function for LibMaster
-# Version: 0.4; Sept 2026
-# Author: Robert Lock - beannachtai@homtail.com
-# License: GPL v3
-# Usage:  [CATalog,RecordNumbers] = fileUpdate(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
-# About:
-# -----------------------------------------------------------------------------
-# Title: recDel.m - A function for LibMaster
-# Version: 0.2; May 2017
-# Author: Robert Lock - beannachtai@homtail.com
-# License: GPL v3
-# Usage:  [CATalog,RecNum] = recDel(CAT)
-# About: no changes written to file
-# -----------------------------------------------------------------------------
-# Title: strCat.m - A function for LibMaster
-# Version: 0.1; May 2017
-# Author: Robert Lock - beannachtai@homtail.com
-# License: GPL v3
-# Usage:  CAT = strCat(TIT,AUT,SUBJ,NTS)
-# About: String conCatenate - concatenate TIT,AUT,etc strings into CAT
-# Notes: This function is not passed RecNum for input arg.
-# -----------------------------------------------------------------------------
-# Title: strDiv.m - A function for LibMaster
-# Version: 0.1; May 2017
-# Author: Robert Lock - beannachtai@homtail.com
-# License: GPL v3
-# Usage:  [CAT,TIT,AUT,SUBJ,NTS] = strDiv(CAT)
-# About: String Divide - strtok CAT strings into appropriate cell arrays
-# Notes: This function is not passed RecNum for input arg.
-# -----------------------------------------------------------------------------
-# Title: subjSearch.m - A function for LibMaster
-# Version: 0.2; Sept 2026 (Replace findstr with strfind)
-# Author: Robert Lock - beannachtai@homtail.com
-# License: GPL v3
-# Usage:  subjSearch(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
-# About:
-# -----------------------------------------------------------------------------
-# Title: titleBrowse.m - A function for LibMaster
-# Version: 0.4; Sept 2026
-# Author: Robert Lock - beannachtai@homtail.com
-# License: GPL v3
-# Usage:  titleBrowse(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
-# About:
-# -----------------------------------------------------------------------------
-# Title: titleSearch.m - A function for LibMaster
-# Version: 0.2; Sept 2026 (Replace findstr with strfind)
-# Author: Robert Lock - beannachtai@homtail.com
-# License: GPL v3
-# Usage:  titleSearch(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
-# About:
-# -----------------------------------------------------------------------------
-###############################################################################
 
 ===============================================================================
 | User guide                                                                  |
@@ -153,6 +65,16 @@ To delete a record, enter the record number.  That can be found by searching
 the title (the last number printed before an item is displayed is the record
 number).  The FILE IS NOT SAVED when finished.
 
+#####################
+#  Saving / Loading #
+#####################
+Saving / Loading is done to/from a plain-text database file, which is basically
+a custom CSV format.  Note this format is compatible with all flavors of Lib-
+Master (i.e., for FreeBASIC, Octave, and even TI BASIC (for home computers)).
+However, a means of saving the catalog structure variable in an "octave-native"
+format will likely be introduced in the future (to give other options for saving
+rather than just the CSV file).
+
 ####################
 #  About Subjects  #
 ####################
@@ -171,4 +93,6 @@ exist, now one can enter 'calculus' and get all the books with the word
 'calculus' in the title.  This does mean however that one has to be careful not
 to enter some single word like 'the' without expecting a lot of results!
 
+
 ===============================================================================
+

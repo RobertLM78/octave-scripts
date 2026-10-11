@@ -1,11 +1,11 @@
 # Title: LibMaster.m - A port of the RBL classic program to OCTAVE
-# Version: 1.3.0 - Sept 2026
+# Version: 2.0.0 - Oct 2026
 # Author: Robert Lock - beannachtai@homtail.com
 # License: GPL v3
 # About:
 # -----------------------------------------------------------------------------
 clear
-LibMasterTitle = "LibMaster-1.3.0";
+LibMasterTitle = "LibMaster-2.0.0";
 ### Splash ###
 splash(LibMasterTitle);
 ##############
@@ -14,7 +14,7 @@ splash(LibMasterTitle);
 clear,clc, close all
 CONT = 1; KbIN = "0"; # CONTinue with the program; KeyboardINput
 FileName = "--.dat"; RecNum = 0;
-LibMasterTitle = "LibMaster-1.3.0";
+LibMasterTitle = "LibMaster-2.0.0";
 menuPart1 = [LibMasterTitle;"Author Search";"Title Search";"Title Browser";"Subject Search"];
 menuPart2 = ["Sort by Title";"Data Entry Mode";"Delete a Record";"Load File";"Save File"];
 menuPart3 = ["Save & Quit";"Quit";"Help: display readme"];
@@ -27,8 +27,8 @@ end
 clear menuPart1 menuPart2 menuPart3
 RecNum = 0;
 # Null variables if starting a new catalog or just haven't loaded one yet
-TIT{1,1} = []; AUT{1,1} = []; AUT{1,2} = []; AUT{1,3} = []; SUBJ{1,1} = []; NTS{1,1} = [];
-CAT = strCat(TIT,AUT,SUBJ,NTS);
+sCATALOG(1:1) = struct("TIT","","AUT1","","AUT2","","AUT3","","SUBJ","","NTS","");  ## NEW ##
+CAT{1,1} = "::::::;1"       ## DUMMY ##
 ###########################
 
 #####  START Main Program Loop  ###############################################
@@ -54,75 +54,72 @@ while CONT ~= 0
 		##########################
 		# OPTION A Author Search #
 		##########################
-    if strcmp(CAT{1,1},"::::::;1") == 1  # First check to see if there is anything to save to file
+    if strcmp(sCATALOG(1).TIT,"") == 1  # First check to see if there is anything to search
       fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans
 		else
-      authorSearch(TIT,AUT,SUBJ,NTS,RecNum);
+      authorSearch(sCATALOG);
       CONT = 1;
     endif
 	elseif KbIN == "b"
 		#########################
 		# OPTION B Title Search #
 		#########################
-    if strcmp(CAT{1,1},"::::::;1") == 1  # First check to see if there is anything to save to file
+    if strcmp(sCATALOG(1).TIT,"") == 1  # First check to see if there is anything to search
       fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans
 		else
-		  titleSearch(TIT,AUT,SUBJ,NTS,RecNum);
+		  titleSearch(sCATALOG);
 		  CONT = 1;
     endif
 	elseif KbIN == "c"
 		##########################
 		# OPTION C Title Browser #
 		##########################
-    if strcmp(CAT{1,1},"::::::;1") == 1  # First check to see if there is anything to save to file
+    if strcmp(sCATALOG(1).TIT,"") == 1  # First check to see if there is anything to search
       fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans
 		else
-		  titleBrowse(TIT,AUT,SUBJ,NTS,RecNum);
+		  titleBrowse(sCATALOG,RecNum);
 		  CONT = 1;
     endif
 	elseif KbIN == "d"
 		###########################
 		# OPTION D Subject Search #
 		###########################
-    if strcmp(CAT{1,1},"::::::;1") == 1  # First check to see if there is anything to save to file
+    if strcmp(sCATALOG(1).TIT,"") == 1  # First check to see if there is anything to search
       fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans
 		else
-		  subjSearch(TIT,AUT,SUBJ,NTS,RecNum);
+		  subjSearch(sCATALOG);
 		  CONT = 1;
     endif
 	elseif KbIN == "e"
 		##########################
 		# OPTION E Sort by Title #
 		##########################
-		if strcmp(CAT{1,1},"::::::;1") == 1  # First check to see if there is anything to sort
+		if strcmp(sCATALOG(1).TIT,"") == 1  # First check to see if there is anything to sort
 			fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans    # CONTinue back with the main loop
 		else
-			CAT = fileSort(CAT,RecNum);
-			[TIT,AUT,SUBJ,NTS] = strDiv(CAT);
+			[sCATALOG,CAT] = fileSort(sCATALOG);
 			CONT = 1;
 		endif
 	elseif KbIN == "f"
 		#############################
 		# OPTION F  Data Entry Mode #
 		#############################
-		[CAT,RecNum] = fileUpdate(TIT,AUT,SUBJ,NTS,RecNum);
-		[TIT,AUT,SUBJ,NTS] = strDiv(CAT);
+		[sCATALOG,CAT,RecNum] = fileUpdate(sCATALOG,CAT,RecNum);
 		CONT = 1;
 	elseif KbIN == "g"
 		############################
 		# OPTION G Delete a Record #
 		############################
-    if strcmp(CAT{1,1},"::::::;1") == 1  # First check to see if there is anything to save to file
+    if strcmp(sCATALOG(1).TIT,"") == 1  # First check to see if there is anything to delete
       fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans
 		else
-		  [CAT,RecNum] = recDel(CAT);
-		  [TIT,AUT,SUBJ,NTS] = strDiv(CAT);
+		  [sCATALOG,CAT,RecNum] = recDel(sCATALOG,CAT,RecNum);
 		  CONT = 1;
     endif
 	elseif KbIN == "h"
@@ -130,17 +127,16 @@ while CONT ~= 0
 		# OPTION H Load File #
 		######################
 		[CAT,RecNum,FileName] = fileLoad(CAT,RecNum,FileName);
-		[TIT,AUT,SUBJ,NTS] = strDiv(CAT);
+    sCATALOG = CAT2struct(CAT);
 		CONT = 1;
 	elseif KbIN == "i"
 		######################
 		# OPTION I Save File #
 		######################
-		if strcmp(CAT{1,1},"::::::;1") == 1  # First check to see if there is anything to save to file
+		if strcmp(sCATALOG(1).TIT,"") == 1  # First check to see if there is anything to save to file
 			fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans    # CONTinue back with the main loop
 		else
-			CAT = strCat(TIT,AUT,SUBJ,NTS);
 			FileName = fileSave(CAT,RecNum,FileName);    # If there is - do save
 		endif
 		CONT = 1;
@@ -148,12 +144,11 @@ while CONT ~= 0
 		########################
 		# OPTION J Save & Quit #
 		########################
-		if strcmp(CAT{1,1},"::::::;1") == 1  # First check to see if there is anything to save to file
+		if strcmp(sCATALOG(1).TIT,"") == 1  # First check to see if there is anything to save to file
 			fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans    # CONTinue back with the main loop
 			CONT = 1;
 		else
-			CAT = strCat(TIT,AUT,SUBJ,NTS);
 			FileName = fileSave(CAT,RecNum,FileName);     # If there is - do save
 			CONT = 0; # Send the signal to quit (CONT ~= 0) == 0
       clc,clear; ## Housekeeping ##

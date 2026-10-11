@@ -1,12 +1,12 @@
 # Title: authorSearch.m - A function for LibMaster
-# Version: 0.2; Sept 2026 (Replace findstr with strfind)
+# Version: 0.3; Oct 2026 (upgrade to structure)
 # Author: Robert Lock - beannachtai@homtail.com
 # License: GPL v3
-# Usage:  authorSearch(TITle,AUThor,SUBJect,NoTeS,RecordNumbers)
+# Usage:  authorSearch(sCATALOG)
 # About:
 # -----------------------------------------------------------------------------
-function authorSearch(TIT,AUT,SUBJ,NTS,RecNum)
-if (nargin ~= 5)
+function authorSearch(sCATALOG)
+if (nargin ~= 1)
 	help authorSearch
 	return
 endif
@@ -35,23 +35,20 @@ while isempty(AUTsrch)
 	###################################
 endwhile
 # Start searching through AUT
-for k = 1:RecNum
+for k = 1:length(sCATALOG)
 	fprintf("%d ",k)
-#	system("sleep 0.025s");
-	for m = 1:3
-		if strfind(lower(AUT{k,m}),AUTsrch) >= 1
-			fprintf("\n")
-			fprintf("Title:      %s\n",TIT{k,1})
-			fprintf("Author 1:   %s\n",AUT{k,1})
-			fprintf("Author 2:   %s\n",AUT{k,2})
-			fprintf("Author 3:   %s\n",AUT{k,3})
-			fprintf("Subject:    %s\n",SUBJ{k,1})
-			fprintf("Notes:      %s\n",NTS{k,1})
-			fprintf("Press any key to continue.\n")
-			kbhit();
-			fprintf("\n")
-		endif
-	end
+  if strfind(lower(sCATALOG(k).AUT1),AUTsrch) >= 1 || strfind(lower(sCATALOG(k).AUT2),AUTsrch) >= 1 || strfind(lower(sCATALOG(k).AUT3),AUTsrch) >= 1
+    fprintf("\n")
+    fprintf("Title:      %s\n",sCATALOG(k).TIT)
+    fprintf("Author 1:   %s\n",sCATALOG(k).AUT1)
+    fprintf("Author 2:   %s\n",sCATALOG(k).AUT2)
+    fprintf("Author 3:   %s\n",sCATALOG(k).AUT3)
+    fprintf("Subject:    %s\n",sCATALOG(k).SUBJ)
+    fprintf("Notes:      %s\n",sCATALOG(k).NTS)
+    fprintf("Press any key to continue.\n")
+    kbhit();
+    fprintf("\n")
+  endif
 end
 fprintf("\n")
 fprintf("Finsihed searching.  Press any key to continue. ")
