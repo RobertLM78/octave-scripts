@@ -54,7 +54,7 @@ while CONT ~= 0
 		##########################
 		# OPTION A Author Search #
 		##########################
-    if strcmp(sCATALOG(1).TIT,"") == 1  # First check to see if there is anything to search
+    if strcmp(sCATALOG(1).TIT,"") == 1 || strcmp(sCATALOG(1).TIT,";1") == 1
       fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans
 		else
@@ -65,7 +65,7 @@ while CONT ~= 0
 		#########################
 		# OPTION B Title Search #
 		#########################
-    if strcmp(sCATALOG(1).TIT,"") == 1  # First check to see if there is anything to search
+    if strcmp(sCATALOG(1).TIT,"") == 1 || strcmp(sCATALOG(1).TIT,";1") == 1
       fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans
 		else
@@ -76,7 +76,7 @@ while CONT ~= 0
 		##########################
 		# OPTION C Title Browser #
 		##########################
-    if strcmp(sCATALOG(1).TIT,"") == 1  # First check to see if there is anything to search
+    if strcmp(sCATALOG(1).TIT,"") == 1 || strcmp(sCATALOG(1).TIT,";1") == 1
       fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans
 		else
@@ -87,7 +87,7 @@ while CONT ~= 0
 		###########################
 		# OPTION D Subject Search #
 		###########################
-    if strcmp(sCATALOG(1).TIT,"") == 1  # First check to see if there is anything to search
+    if strcmp(sCATALOG(1).TIT,"") == 1 || strcmp(sCATALOG(1).TIT,";1") == 1
       fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans
 		else
@@ -98,7 +98,7 @@ while CONT ~= 0
 		##########################
 		# OPTION E Sort by Title #
 		##########################
-		if strcmp(sCATALOG(1).TIT,"") == 1  # First check to see if there is anything to sort
+		if strcmp(sCATALOG(1).TIT,"") == 1 || strcmp(sCATALOG(1).TIT,";1") == 1
 			fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans    # CONTinue back with the main loop
 		else
@@ -115,7 +115,7 @@ while CONT ~= 0
 		############################
 		# OPTION G Delete a Record #
 		############################
-    if strcmp(sCATALOG(1).TIT,"") == 1  # First check to see if there is anything to delete
+    if strcmp(sCATALOG(1).TIT,"") == 1 || strcmp(sCATALOG(1).TIT,";1") == 1
       fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans
 		else
@@ -133,7 +133,7 @@ while CONT ~= 0
 		######################
 		# OPTION I Save File #
 		######################
-		if strcmp(sCATALOG(1).TIT,"") == 1  # First check to see if there is anything to save to file
+		if strcmp(sCATALOG(1).TIT,"") == 1 || strcmp(sCATALOG(1).TIT,";1") == 1
 			fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans    # CONTinue back with the main loop
 		else
@@ -144,7 +144,7 @@ while CONT ~= 0
 		########################
 		# OPTION J Save & Quit #
 		########################
-		if strcmp(sCATALOG(1).TIT,"") == 1  # First check to see if there is anything to save to file
+		if strcmp(sCATALOG(1).TIT,"") == 1 || strcmp(sCATALOG(1).TIT,";1") == 1
 			fprintf("\n\nNo Data Entered.  Press any key to continue.")
 			kbhit(); clear ans    # CONTinue back with the main loop
 			CONT = 1;
